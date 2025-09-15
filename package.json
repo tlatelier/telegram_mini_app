@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "gh": "cross-env BASE_PATH=/${npm_package_name}/ vite build && npx gh-pages -d dist -b gh-pages",
+    "gh": "cross-env BASE_PATH=/telegram_mini_app/ vite build && npx gh-pages -d dist -b gh-pages",
     "lint": "eslint .",
     "preview": "vite preview"
   },
