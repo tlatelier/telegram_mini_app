@@ -8,7 +8,7 @@
         /* Safe area paddings for iOS full-screen */
         padding-top: env(safe-area-inset-top, 0px);
         /* Reserve space for bottom nav so content is not overlapped */
-        padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
         background: #F7F4EF;
     }
 
@@ -16,11 +16,11 @@
         position: fixed;
         left: 0;
         right: 0;
-        bottom: 0;
+        bottom: max(8px, env(safe-area-inset-bottom, 0px));
         display: flex;
         gap: 8px;
-        /* Bottom spacing + safe area inset */
-        padding: 8px 12px calc(12px + env(safe-area-inset-bottom, 0px)) 12px;
+        /* Vertical padding; safe-area компенсируем через bottom offset */
+        padding: 8px 12px;
         background: transparent;
         border-top: 1px solid rgba(0, 0, 0, 0.06);
         box-shadow: 0 -6px 16px rgba(0, 0, 0, 0.06);
