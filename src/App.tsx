@@ -1,4 +1,3 @@
-
 import { useCallback, useMemo, useState } from 'react';
 import { StartPage } from './pages/StartPage.tsx';
 import { PrivateTripsPage } from './pages/PrivateTripsPage.tsx';
