@@ -1,0 +1,42 @@
+.layout {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+
+    &__main {
+        flex: 1 1 auto;
+        /* Reserve space for bottom nav so content is not overlapped */
+        padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+        background: #F7F4EF;
+    }
+
+    &__nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        gap: 8px;
+        padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px)) 12px;
+        background: transparent;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 -6px 16px rgba(0, 0, 0, 0.06);
+        z-index: 10;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+
+    &__nav--solid {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: saturate(180%) blur(10px);
+        box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+    }
+
+    &__nav-item {
+        width: 100%;
+    }
+}
+
+

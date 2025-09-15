@@ -1,0 +1,308 @@
+.privateTrips {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 12px;
+
+    &__sectionTitle {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 8px 0 4px;
+    }
+
+    /* Hero */
+    &__hero {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    &__heroTitle {
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 1.1;
+    }
+    &__heroSub {
+        color: #5f6358;
+    }
+    &__heroActions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    &__heroBadges {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+    &__badge {
+        background: rgba(255,255,255,0.7);
+        border: 1px solid rgba(0,0,0,0.06);
+        border-radius: 12px;
+        padding: 8px;
+        text-align: center;
+    }
+    &__badgeNum {
+        font-weight: 700;
+    }
+    &__badgeText {
+        color: #5f6358;
+        font-size: 12px;
+    }
+
+    /* Prefs */
+    &__prefs {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: rgba(255,255,255,0.7);
+        border: 1px solid rgba(0,0,0,0.06);
+        border-radius: 16px;
+        padding: 12px;
+    }
+    &__prefsGroup {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    &__prefsLabel {
+        color: #5f6358;
+        font-size: 14px;
+    }
+    &__chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    &__chip {
+        height: 40px;
+        padding: 0 12px;
+        border-radius: 999px;
+        border: 1px solid #6b715f;
+        background: transparent;
+        color: #6b715f;
+    }
+    &__chip--active {
+        background: #a6533f;
+        color: #fff;
+        border-color: #a6533f;
+    }
+    &__prefsSummary {
+        margin-top: 4px;
+        color: #5f6358;
+    }
+    &__prefsCta {
+        margin-top: 4px;
+    }
+
+    /* Cases */
+    &__cases {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    &__caseGrid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    &__case {
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.06);
+        background: #fff;
+    }
+    &__caseImage {
+        height: 180px;
+        background-size: cover;
+        background-position: center;
+    }
+    &__caseBody {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    &__caseTitle {
+        font-weight: 700;
+    }
+    &__caseMeta {
+        color: #5f6358;
+        font-size: 14px;
+    }
+    &__caseHighlights {
+        margin: 0;
+        padding-left: 18px;
+    }
+    &__caseActions {
+        margin-top: 6px;
+    }
+
+    /* Benefits */
+    &__benefits {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    &__benefitGrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    &__benefit {
+        background: rgba(255,255,255,0.7);
+        border: 1px solid rgba(0,0,0,0.06);
+        border-radius: 12px;
+        padding: 10px;
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 8px;
+        align-items: start;
+    }
+    &__benefitIcon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #eae7e2;
+    }
+    &__benefitTitle {
+        font-weight: 700;
+    }
+    &__benefitText {
+        color: #5f6358;
+        font-size: 14px;
+    }
+
+    /* Process */
+    &__process {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    &__steps {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    &__step {
+        display: grid;
+        grid-template-columns: 36px 1fr;
+        gap: 8px;
+        align-items: start;
+    }
+    &__stepNum {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #a6533f;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+    }
+    &__stepTitle {
+        font-weight: 700;
+    }
+    &__stepText {
+        color: #5f6358;
+        font-size: 14px;
+    }
+
+    /* Includes */
+    &__inclusions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    &__inclWrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    &__list {
+        margin: 0;
+        padding-left: 18px;
+    }
+    &__list--ok li::marker {
+        color: #2a8a4a;
+    }
+    &__list--no li::marker {
+        color: #a6533f;
+    }
+
+    /* Inspiration */
+    &__inspGrid {
+        column-count: 2;
+        column-gap: 8px;
+    }
+    &__inspItem {
+        break-inside: avoid;
+        margin-bottom: 8px;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    &__inspImg {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+    }
+
+    /* Reviews */
+    &__reviewList {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    &__review {
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.06);
+        border-radius: 12px;
+        padding: 10px;
+    }
+    &__reviewText {
+        font-style: italic;
+    }
+    &__reviewMeta {
+        color: #5f6358;
+        font-size: 14px;
+        margin-top: 4px;
+    }
+
+    /* FAQ */
+    &__faqList {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    &__faqItem {
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.06);
+        border-radius: 10px;
+    }
+    &__faqQ {
+        width: 100%;
+        text-align: left;
+        padding: 10px;
+    }
+    &__faqA {
+        padding: 0 10px 10px;
+        color: #5f6358;
+    }
+
+    /* Form */
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    &__input {
+        height: 48px;
+        border-radius: 12px;
+        border: 1px solid #6b715f;
+        padding: 0 12px;
+        background: #fff;
+    }
+}
+
+
