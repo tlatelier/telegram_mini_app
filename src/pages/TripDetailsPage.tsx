@@ -1,6 +1,7 @@
 import type { TripId } from '../components/Trip/type.h.ts';
 import { tripData, tripDetails } from '../components/Trip/data.ts';
 import { Button } from '../components/Button';
+import { createLead } from '../services/bitrix';
 import './trip-details.less';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
@@ -14,6 +15,12 @@ const TripDetailsPage = ({ tripId }: TripDetailsPageProps) => {
     const trip = tripData.find((t) => t.id === tripId);
     const details = tripDetails.find((d) => d.id === tripId);
     const [overlay, setOverlay] = useState<number | null>(null);
+    const [leadName, setLeadName] = useState<string>('');
+    const [leadPhone, setLeadPhone] = useState<string>('');
+    const [leadTg, setLeadTg] = useState<string>('');
+    const [sending, setSending] = useState<boolean>(false);
+    const [sent, setSent] = useState<boolean>(false);
+    const [errorMsg, setErrorMsg] = useState<string>('');
 
     // Scroll lock теперь через CSS :has(.tripDetailsPage__overlay)
 
@@ -98,10 +105,60 @@ const TripDetailsPage = ({ tripId }: TripDetailsPageProps) => {
             )}
 
             <div id="lead-form" className={`${cls}__form`}>
-                <input className={`${cls}__input`} placeholder="Имя" required />
-                <input className={`${cls}__input`} placeholder="Телефон" required />
-                <input className={`${cls}__input`} placeholder="Telegram" />
-                <button className={`${cls}__submit`}>Отправить</button>
+                <input
+                    className={`${cls}__input`}
+                    placeholder="Имя"
+                    value={leadName}
+                    onChange={(e) => setLeadName(e.target.value)}
+                    required
+                />
+                <input
+                    className={`${cls}__input`}
+                    placeholder="Телефон"
+                    value={leadPhone}
+                    onChange={(e) => setLeadPhone(e.target.value)}
+                    required
+                />
+                <input
+                    className={`${cls}__input`}
+                    placeholder="Telegram"
+                    value={leadTg}
+                    onChange={(e) => setLeadTg(e.target.value)}
+                />
+                {errorMsg && <div style={{ color: '#a6533f' }}>{errorMsg}</div>}
+                {sent ? (
+                    <div className={`${cls}__submit`}>Отправлено! Мы свяжемся с вами.</div>
+                ) : (
+                    <button
+                        className={`${cls}__submit`}
+                        onClick={async () => {
+                            if (sending) return;
+                            setErrorMsg('');
+                            if (!leadName || !leadPhone) {
+                                setErrorMsg('Заполните имя и телефон');
+                                return;
+                            }
+                            try {
+                                setSending(true);
+                                const isTg = Boolean((window as any)?.Telegram?.WebApp);
+                                await createLead({
+                                    title: `Заявка: ${trip.title ?? trip.destination}`,
+                                    name: leadName,
+                                    phones: [{ value: leadPhone, valueType: 'MOBILE' }],
+                                    comments: leadTg ? `Telegram: ${leadTg}` : undefined,
+                                    sourceId: isTg ? 'TELEGRAM' : 'WEB',
+                                });
+                                setSent(true);
+                            } catch (e: any) {
+                                setErrorMsg('Не удалось отправить. Попробуйте позже.');
+                            } finally {
+                                setSending(false);
+                            }
+                        }}
+                    >
+                        {sending ? 'Отправка…' : 'Отправить'}
+                    </button>
+                )}
             </div>
 
             <FAQ />

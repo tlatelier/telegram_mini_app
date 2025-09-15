@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Button } from '../components/Button';
+import { createLead } from '../services/bitrix';
 import './private-trips.less';
 
 const cls = 'privateTrips';
@@ -244,10 +245,7 @@ const PrivateTripsPage = () => {
 
             <section id="lead-form" className={`${cls}__form`}>
                 <h2 className={`${cls}__sectionTitle`}>Оставить заявку</h2>
-                <input className={`${cls}__input`} placeholder="Имя" required />
-                <input className={`${cls}__input`} placeholder="Телефон" required />
-                <input className={`${cls}__input`} placeholder="Telegram" />
-                <Button text="Отправить" callback={() => {}} active />
+                <LeadForm />
             </section>
         </div>
     );
@@ -275,5 +273,55 @@ const FaqInline = () => {
 export {
     PrivateTripsPage,
 };
+const LeadForm = () => {
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [tg, setTg] = useState('');
+    const [sending, setSending] = useState(false);
+    const [sent, setSent] = useState(false);
+    const [err, setErr] = useState('');
+
+    return (
+        <div className={`${cls}__form`}>
+            <input className={`${cls}__input`} placeholder="Имя" value={name} onChange={(e) => setName(e.target.value)} required />
+            <input className={`${cls}__input`} placeholder="Телефон" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+            <input className={`${cls}__input`} placeholder="Telegram" value={tg} onChange={(e) => setTg(e.target.value)} />
+            {err && <div style={{ color: '#a6533f' }}>{err}</div>}
+            {sent ? (
+                <div className={`${cls}__submit`}>Отправлено! Мы свяжемся с вами.</div>
+            ) : (
+                <Button
+                    text={sending ? 'Отправка…' : 'Отправить'}
+                    active
+                    callback={async () => {
+                        if (sending) return;
+                        setErr('');
+                        if (!name || !phone) {
+                            setErr('Заполните имя и телефон');
+                            return;
+                        }
+                        try {
+                            setSending(true);
+                            const isTg = Boolean((window as any)?.Telegram?.WebApp);
+                            await createLead({
+                                title: 'Заявка: Частные путешествия',
+                                name,
+                                phones: [{ value: phone, valueType: 'MOBILE' }],
+                                comments: tg ? `Telegram: ${tg}` : undefined,
+                                sourceId: isTg ? 'TELEGRAM' : 'WEB',
+                            });
+                            setSent(true);
+                        } catch (e) {
+                            setErr('Не удалось отправить. Попробуйте позже.');
+                        } finally {
+                            setSending(false);
+                        }
+                    }}
+                />
+            )}
+        </div>
+    );
+};
+
 
 
