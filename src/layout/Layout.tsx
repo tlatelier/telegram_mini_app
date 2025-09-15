@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useSafeAreaInsets } from '../hooks/useSaveAreaInsets';
 import type { NavigationSectionType } from '../types/navigation';
 import { Button } from '../components/Button';
 import './layout.less';
@@ -15,6 +16,8 @@ interface LayoutProps {
 
 const Layout = ({ children, onNavigate, active, showBack, onBack }: LayoutProps) => {
     const [navElevated, setNavElevated] = useState(false);
+    
+    const insets = useSafeAreaInsets();
 
     useEffect(() => {
         const update = () => {
@@ -44,7 +47,15 @@ const Layout = ({ children, onNavigate, active, showBack, onBack }: LayoutProps)
     }, [onNavigate]);
 
     return (
-        <div className={layoutClass}>
+        <div
+            className={layoutClass}
+            style={{
+                paddingTop: insets.top,
+                paddingLeft: insets.left,
+                paddingRight: insets.right,
+                paddingBottom: insets.bottom,
+            }}
+        >
             <main className={`${layoutClass}__main`}>
                 {children}
             </main>
