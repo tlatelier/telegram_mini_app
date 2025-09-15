@@ -1,2 +1,2 @@
-# telegram_mini_app
+# Telegram miniapp
 Telegram miniapp для проекта Travel Atelier
