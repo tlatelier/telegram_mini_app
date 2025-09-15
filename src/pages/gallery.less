@@ -12,13 +12,14 @@
         position: fixed;
         left: 0;
         right: 0;
-        bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+        bottom: calc(65px + env(safe-area-inset-bottom, 0px));
+        backdrop-filter: saturate(180%) blur(10px);
+        box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
         display: flex;
         gap: 8px;
         padding: 8px 12px;
         align-items: center;
-        border-top: 1px solid rgba(0,0,0,0.06);
-        box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
+        background: rgba(255, 255, 255, 0.92);
         z-index: 11; /* above nav */
     }
 

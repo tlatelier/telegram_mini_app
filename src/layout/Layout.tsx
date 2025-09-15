@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useCallback, useMemo, type ReactNode } from 'react';
 import type { NavigationSectionType } from '../types/navigation';
 import { Button } from '../components/Button';
 import './layout.less';
@@ -14,25 +14,6 @@ interface LayoutProps {
 }
 
 const Layout = ({ children, onNavigate, active, showBack, onBack }: LayoutProps) => {
-    const [navElevated, setNavElevated] = useState(false);
-
-    useEffect(() => {
-        const update = () => {
-            const doc = document.documentElement;
-            const scrollTop = doc.scrollTop;
-            const clientHeight = doc.clientHeight;
-            const scrollHeight = doc.scrollHeight;
-            const atBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 1;
-            setNavElevated(!atBottom);
-        };
-        update();
-        window.addEventListener('scroll', update, { passive: true } as AddEventListenerOptions);
-        window.addEventListener('resize', update);
-        return () => {
-            window.removeEventListener('scroll', update);
-            window.removeEventListener('resize', update);
-        };
-    }, []);
     const items = useMemo(() => ([
         { key: 'group' as const, label: 'Групповые' },
         { key: 'private' as const, label: 'Частные' },
@@ -51,7 +32,7 @@ const Layout = ({ children, onNavigate, active, showBack, onBack }: LayoutProps)
                 {children}
             </main>
             <nav 
-                className={`${layoutClass}__nav${navElevated ? ` ${layoutClass}__nav--solid` : ''}`} 
+                className={`${layoutClass}__nav`} 
                 aria-label="Основная навигация"
             >
                 {showBack ? (

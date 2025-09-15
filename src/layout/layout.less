@@ -4,9 +4,6 @@
     flex-direction: column;
     background: #F7F4EF;
 
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-
     &__main {
         flex: 1 1 auto;
         /* Reserve space for bottom nav so content is not overlapped */
@@ -20,21 +17,14 @@
         bottom: 0;
         display: flex;
         gap: 8px;
-        padding: 8px 12px;
-        background: transparent;
-        border-top: 1px solid rgba(0, 0, 0, 0.06);
-        box-shadow: 0 -6px 16px rgba(0, 0, 0, 0.06);
+        padding: 15px 12px 25px;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: saturate(180%) blur(10px);
+        box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
         z-index: 10;
         -webkit-user-select: none;
         user-select: none;
         -webkit-tap-highlight-color: transparent;
-    }
-
-
-    &__nav--solid {
-        background: rgba(255, 255, 255, 0.92);
-        backdrop-filter: saturate(180%) blur(10px);
-        box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
     }
 
     &__nav-item {
