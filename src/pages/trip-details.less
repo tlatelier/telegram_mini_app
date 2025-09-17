@@ -147,9 +147,10 @@
     &__programHero-mask {
         position: absolute;
         inset: 0;
-        background: linear-gradient(180deg, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.2) 100%);
+        background: linear-gradient(180deg, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.7) 100%);
     }
     &__programHero-content {
+        position: relative;
         display: flex;
         height: 100%;
         align-items: center;
@@ -169,7 +170,6 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
     &__input {
-        height: 44px;
         width: 100%;
         border-radius: 10px;
         border: 1px solid #c9cfc1;
@@ -179,6 +179,8 @@
         appearance: none;
         box-shadow: none;
         color: #1c1c1c;
+        padding: 15px 20px;
+        box-sizing: border-box;
     }
     &__input::placeholder {
         color: #8b8f82;
@@ -294,14 +296,10 @@
         left: 0;
         right: 0;
         bottom: 12px;
-        display: flex;
-        gap: 12px;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-column-gap: 8px;
         padding: 0 12px;
-    }
-    &__overlay-btn {
-        width: 33.333%;
-        max-width: 220px;
     }
     &__overlay-btn--secondary .button {
         background: #ffffff;

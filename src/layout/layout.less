@@ -1,13 +1,16 @@
 .layout {
-    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     background: #F7F4EF;
 
+    padding-top: max(12px, calc(var(--tg-content-safe-area-inset-top, 0px) + var(--tg-safe-area-inset-top, 0px)));
+    padding-bottom: var(--tg-safe-area-inset-bottom);
+    min-height: var(--viewport-height, 100vh);
+
     &__main {
         flex: 1 1 auto;
         /* Reserve space for bottom nav so content is not overlapped */
-        padding-bottom: 72px;
+        padding-bottom: 102px;
     }
 
     &__nav {

@@ -69,8 +69,8 @@
         font-size: 14px;
     }
     &__chips {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
         gap: 8px;
     }
     &__chip {
@@ -298,12 +298,23 @@
         gap: 8px;
     }
     &__input {
-        height: 48px;
-        border-radius: 12px;
-        border: 1px solid #6b715f;
-        padding: 0 12px;
+        width: 100%;
+        border-radius: 10px;
+        border: 1px solid #c9cfc1;
         background: #fff;
+        outline: none;
+        -webkit-appearance: none;
+        appearance: none;
+        box-shadow: none;
+        color: #1c1c1c;
+        padding: 15px 20px;
+        box-sizing: border-box;
     }
+    &__input::placeholder {
+        color: #8b8f82;
+        opacity: 1;
+    }
+    &__input:focus { border-color: #6b715f; }
 }
 
 
