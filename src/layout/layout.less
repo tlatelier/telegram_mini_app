@@ -3,9 +3,20 @@
     flex-direction: column;
     background: #F7F4EF;
 
-    padding-top: max(12px, calc(var(--tg-content-safe-area-inset-top, 0px) + var(--tg-safe-area-inset-top, 0px)));
-    padding-bottom: var(--tg-safe-area-inset-bottom);
+    position: relative;
+
     min-height: var(--viewport-height, 100vh);
+    padding-bottom: var(--tg-safe-area-inset-bottom);
+    padding-top: calc(var(--tg-content-safe-area-inset-top, 0px) + var(--tg-safe-area-inset-top, 0px));
+
+    &::before {
+        content: '';
+        top: 0;
+        width: 100%;
+        position: absolute;
+        height: calc(var(--tg-content-safe-area-inset-top, 0px) + var(--tg-safe-area-inset-top, 0px));
+        background: rgba(0,0,0,0.4);
+    }
 
     &__main {
         flex: 1 1 auto;
