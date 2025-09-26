@@ -1,0 +1,39 @@
+.leadForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  &__input {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #c9cfc1;
+    background: #fff;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    color: #1c1c1c;
+    padding: 15px 20px;
+    box-sizing: border-box;
+  }
+  &__input::placeholder {
+    color: #8b8f82;
+    opacity: 1;
+  }
+  &__input:focus {
+    border-color: #6b715f;
+  }
+
+  &__submit {
+    height: 48px;
+    border-radius: 12px;
+    background: #a6533f;
+    color: #fff;
+    font-weight: 600;
+    border: 1px solid #a6533f;
+  }
+}

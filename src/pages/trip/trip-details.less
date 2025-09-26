@@ -1,0 +1,222 @@
+.tripDetailsPage {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 12px;
+
+  &__hero {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__title {
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  &__meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: #6b715f;
+  }
+
+  /* Simple gallery */
+  &__gallery {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  &__gallery-track {
+    display: flex;
+    transition: transform 200ms ease;
+  }
+  &__gallery-item {
+    min-width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+  }
+  &__gallery-caption {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    pointer-events: none;
+  }
+  &__gallery-title {
+    font-size: 20px;
+    font-weight: 800;
+  }
+  &__gallery-date {
+    font-size: 14px;
+    opacity: 0.95;
+  }
+  &__gallery-controls {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__bullets {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+  }
+  &__bullet {
+    width: 6px;
+    height: 6px;
+    background: #c9cfc1;
+    border-radius: 50%;
+  }
+  &__bullet--active {
+    background: #6b715f;
+  }
+
+  /* Highlights */
+  &__highlights {
+    display: grid;
+    gap: 10px;
+  }
+  &__highlight {
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+  &__highlight-title {
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  /* Facts */
+  &__photosGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  &__photosItem {
+    height: 120px;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  &__facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  &__fact {
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+  &__fact-title {
+    font-weight: 700;
+  }
+  &__fact-sub {
+    color: #6b715f;
+    font-size: 12px;
+  }
+
+  /* Program slider */
+  &__programHero {
+    position: relative;
+    height: 420px;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  &__programHero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  &__programHero-mask {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.1) 40%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+  }
+  &__programHero-content {
+    position: relative;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    padding: 0 12px;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  /* Lead form moved to components/LeadForm */
+  /* Keep submit button styles as used across the page */
+  &__submit {
+    height: 48px;
+    border-radius: 12px;
+    background: #a6533f;
+    color: #fff;
+    font-weight: 600;
+    border: 1px solid #a6533f;
+  }
+  &__submitFull {
+    width: 60%;
+  }
+  &__submitFull {
+    width: 60%;
+  }
+
+  /* FAQ */
+  &__faq {
+    display: grid;
+    gap: 8px;
+  }
+  &__faq-item {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+  }
+  &__faq-q {
+    width: 100%;
+    text-align: left;
+    padding: 14px 12px;
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1c1c1c;
+  }
+  &__faq-a {
+    padding: 0 12px 12px 12px;
+    color: #444;
+    font-size: 14px;
+  }
+
+  /* Program overlay moved to components/ProgramOverlay */
+}
+
+/* Global scroll lock when overlay is present */
+html:has(.programOverlay),
+body:has(.programOverlay) {
+  overflow: hidden;
+  height: 100%;
+  overscroll-behavior: none;
+}
