@@ -2,6 +2,7 @@ type TripId = string;
 
 type TripDataType = {
   id: TripId;
+  isActive: boolean;
   date: string;
   background: string;
   destination: string;

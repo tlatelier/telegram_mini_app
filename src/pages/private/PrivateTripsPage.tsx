@@ -9,6 +9,21 @@ const cls = "privateTrips";
 
 type ChipValue = string;
 
+type CaseDay = {
+  title: string;
+  description?: string;
+  photo?: string;
+};
+
+type CaseCard = {
+  id: string;
+  title: string;
+  meta: string;
+  img: string;
+  highlights: string[];
+  days: CaseDay[];
+};
+
 const DURATION: ChipValue[] = ["3–5 дней", "6–9 дней", "10–14 дней"];
 const GROUP: ChipValue[] = ["Соло", "Пара", "Семья", "Компания"];
 const RATE: ChipValue[] = ["Спокойный", "Сбалансированный", "Активный"];
@@ -18,18 +33,9 @@ const INTERESTS: ChipValue[] = [
   "Архитектура",
   "Арт",
   "Вино",
+  "Концерты",
 ];
-const BUDGET: ChipValue[] = ["1000$", "2000$", "3000+$"];
-
-type CaseDay = { title: string; description?: string; photo?: string };
-type CaseCard = {
-  id: string;
-  title: string;
-  meta: string;
-  img: string;
-  highlights: string[];
-  days: CaseDay[];
-};
+const BUDGET: ChipValue[] = ["до 3000$", "3000-7000$", "более 7000$"];
 const CASES: CaseCard[] = [
   {
     id: "c1",
@@ -149,16 +155,12 @@ const STEPS: { num: number; title: string; text: string }[] = [
     text: "Через 24 часа отправим маршрут и смету",
   },
   { num: 3, title: "Согласование", text: "Уточняем детали и бронируем" },
-  { num: 4, title: "Сопровождение", text: "Куратор с вами 24/7 на связи" },
+  {
+    num: 4,
+    title: "Сопровождение (опция)",
+    text: "Куратор с вами 24/7 на связи",
+  },
 ];
-
-const INCLUDES: string[] = [
-  "Проживание",
-  "Индивидуальная программа",
-  "Сопровождение куратора",
-  "Трансферы по маршруту",
-];
-const EXCLUDES: string[] = ["Авиабилеты", "Часть питания", "Личные расходы"];
 
 const INSPIRATION: string[] = [
   "https://images.unsplash.com/photo-1488740304459-45c4277a3e56?q=80&w=1200&auto=format",
@@ -215,6 +217,7 @@ const PrivateTripsPage = () => {
       .getElementById("lead-form")
       ?.scrollIntoView({ behavior: "smooth" });
   };
+
   const scrollToPrefs = () => {
     document.getElementById("prefs")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -222,21 +225,25 @@ const PrivateTripsPage = () => {
   const [selectedCaseIndex, setSelectedCaseIndex] = useState<number | null>(
     null
   );
+
   const [activeDay, setActiveDay] = useState<number>(0);
 
   const openCase = (idx: number) => {
     setSelectedCaseIndex(idx);
     setActiveDay(0);
   };
+
   const closeCase = () => {
     setSelectedCaseIndex(null);
     setActiveDay(0);
   };
+
   const prevDay = () => {
     if (selectedCaseIndex === null) return;
     const daysCount = CASES[selectedCaseIndex].days.length;
     setActiveDay((d) => (d + daysCount - 1) % daysCount);
   };
+  
   const nextDay = () => {
     if (selectedCaseIndex === null) return;
     const daysCount = CASES[selectedCaseIndex].days.length;
@@ -337,7 +344,7 @@ const PrivateTripsPage = () => {
           </div>
         </div>
         <div className={`${cls}__prefsGroup`}>
-          <div className={`${cls}__prefsLabel`}>Бюджет</div>
+          <div className={`${cls}__prefsLabel`}>Бюджет поездки</div>
           <div className={`${cls}__chips`}>
             {BUDGET.map((v) => (
               <button
@@ -431,22 +438,6 @@ const PrivateTripsPage = () => {
         </div>
       </section>
 
-      <section className={`${cls}__inclusions`}>
-        <h2 className={`${cls}__sectionTitle`}>Что включено</h2>
-        <div className={`${cls}__inclWrap`}>
-          <ul className={`${cls}__list ${cls}__list--ok`}>
-            {INCLUDES.map((i, idx) => (
-              <li key={idx}>{i}</li>
-            ))}
-          </ul>
-          <ul className={`${cls}__list ${cls}__list--no`}>
-            {EXCLUDES.map((i, idx) => (
-              <li key={idx}>{i}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
       <section className={`${cls}__inspiration`}>
         <h2 className={`${cls}__sectionTitle`}>Вдохновение</h2>
         <div className={`${cls}__inspGrid`}>
@@ -489,7 +480,13 @@ const PrivateTripsPage = () => {
 
       <section className={`${cls}__form`}>
         <h2 className={`${cls}__sectionTitle`}>Оставить заявку</h2>
-        <LeadForm tripTitle="Частные путешествия" />
+        <LeadForm
+          duration={duration}
+          group={group}
+          rate={rate}
+          interests={interests}
+          budget={budget}
+        />
       </section>
     </div>
   );

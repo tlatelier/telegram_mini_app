@@ -1,4 +1,4 @@
-import { bem } from "../../../shared/lib/bem";
+import { bem } from "../../../shared/lib/utils/bem.ts";
 import type { TripDataType } from "../model/type.h";
 
 const tripCardClass = "tripCard";
@@ -12,7 +12,7 @@ const TripCard = (props: TripCardProps) => {
 
   return (
     <div
-      style={{ backgroundImage: background }}
+      style={{ backgroundImage: `url(${background})` }}
       className={tripCardClass}
       role="button"
       tabIndex={0}

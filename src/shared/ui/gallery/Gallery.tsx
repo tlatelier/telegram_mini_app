@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./gallery.less";
 
 const cls = "gallery";
@@ -10,24 +10,48 @@ export const Gallery = ({ images, showControls = true }: GalleryProps) => {
   const next = () => setIndex((i) => (i - 1 + images.length) % images.length);
   const prev = () => setIndex((i) => (i + 1) % images.length);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [slideWidth, setSlideWidth] = useState(0);
+
   useEffect(() => {
     setIndex(Math.max(0, images.length - 1));
   }, [images.length]);
 
   useEffect(() => {
-    if (images.length <= 1) return;
+    if (images.length <= 1) {
+      return;
+    }
+
     const id = setInterval(() => {
       setIndex((i) => (i - 1 + images.length) % images.length);
-    }, 2500);
+    }, 2000);
+
     return () => clearInterval(id);
   }, [images.length]);
 
-  const width = `${images.length * 100}%`;
-  const transform = `translateX(-${index * (100 / images.length)}%)`;
+  useEffect(() => {
+    const node = containerRef.current;
+
+    if (!node) {
+      return;
+    };
+
+    const update = () => setSlideWidth(node.clientWidth);
+
+    update();
+
+    const ro = new ResizeObserver(() => update());
+
+    ro.observe(node);
+
+    return () => ro.disconnect();
+  }, []);
+
+  const transform = `translate3d(-${index * slideWidth}px, 0, 0)`;
 
   return (
-    <div className={cls}>
-      <div className={`${cls}__track`} style={{ width, transform }}>
+    <div ref={containerRef} className={cls}>
+      <div className={`${cls}__track`} style={{ transform }}>
         {images.map((src, i) => (
           <div
             key={i}

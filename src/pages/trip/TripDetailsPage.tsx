@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import type { TripId } from "../../entities/trip/model/type.h.ts";
-import { tripData, tripDetails } from "../../entities/trip/model/data.ts";
+import { activeTripData, activeTripDetails } from "../../entities/trip/model/data.ts";
 import { LeadForm } from "../../features/lead-form/LeadForm.tsx";
 import { FAQ } from "../../shared/ui/faq/FAQ.tsx";
 import { ProgramOverlay } from "../../widgets/program-overlay/ProgramOverlay.tsx";
@@ -37,8 +37,8 @@ type TripDetailsPageProps = {
 };
 
 const TripDetailsPage = ({ tripId }: TripDetailsPageProps) => {
-  const trip = tripData.find((t) => t.id === tripId);
-  const details = tripDetails.find((d) => d.id === tripId);
+  const trip = activeTripData.find((t) => t.id === tripId);
+  const details = activeTripDetails.find((d) => d.id === tripId);
   const [overlay, setOverlay] = useState<number | null>(null);
 
   const days = useMemo(() => details?.days ?? [], [details]);
@@ -81,7 +81,7 @@ const TripDetailsPage = ({ tripId }: TripDetailsPageProps) => {
       <div className={`${cls}__facts`}>
         <div className={`${cls}__fact`}>
           <div className={`${cls}__fact-title`}>{days.length}</div>
-          <div className={`${cls}__fact-sub`}>Дня</div>
+          <div className={`${cls}__fact-sub`}>Дней</div>
         </div>
         <div className={`${cls}__fact`}>
           <div className={`${cls}__fact-title`}>
@@ -102,17 +102,17 @@ const TripDetailsPage = ({ tripId }: TripDetailsPageProps) => {
           <div className={`${cls}__highlight-title`}>
             Познавать и видеть новое
           </div>
-          <div>Древние мечети, минареты и медресе</div>
+          <div>От кварталов танго в Буэнос-Айресе до ледников Патагонии и «Конца Света» в Ушуайе</div>
         </div>
         <div className={`${cls}__highlight`}>
           <div className={`${cls}__highlight-title`}>
-            Вкушать с удовольствием
+            Переживать уникальные моменты
           </div>
-          <div>Узбекский плов, самса, дымляма</div>
+          <div>Ужин с шоу танго, сафари среди айсбергов, встреча с пингвинами и ранчо гаучо</div>
         </div>
         <div className={`${cls}__highlight`}>
-          <div className={`${cls}__highlight-title`}>Жить в эстетике</div>
-          <div>Комфортные отели категории 4+</div>
+          <div className={`${cls}__highlight-title`}>Отдыхать с комфортом</div>
+          <div>Продуманная логистика, комфортабельные отели и время для отдыха у бассейна или в SPA</div>
         </div>
       </div>
 

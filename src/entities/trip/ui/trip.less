@@ -1,11 +1,14 @@
-.tripCardList {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  padding: 12px;
-
-  @media (max-width: 360px) {
+.tripSection {
+  &__title {
+    text-align: center;
+    font-size: 18px;
+  }
+  &__cards {
+    display: grid;
     grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px;
+    justify-items: center;
   }
 }
 
@@ -13,7 +16,10 @@
   position: relative;
   border-radius: 16px;
   overflow: hidden;
-  min-height: 140px;
+  min-height: 120px;
+  max-width: 750px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

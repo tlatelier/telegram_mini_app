@@ -1,11 +1,21 @@
 import { useCallback, useState, type ChangeEvent } from "react";
-import { createLead } from "../../shared/api/bitrix";
-import "./lead-form.less";
+import { createLead } from "../../shared/api/services/bitrix";
+import { GROUP_STRUCTURE_FIELDS, TEMPO_FIELDS, BUDGET_FIELDS } from "../../shared/api/services/bitrix/enumeration";
+import "./lead-form.less"
 
 const cls = "leadForm";
 
 type LeadFormProps = {
-  tripTitle: string;
+  // Для групповых туров
+  tripDuration?: string;
+  tripTitle?: string;
+
+  // Для индивидуальных предпочтений (PrivateTripsPage)
+  duration?: string | null;
+  group?: string | null;
+  rate?: string | null;
+  interests?: string[];
+  budget?: string | null;
 };
 
 const extractDigits = (value: string): string => {
@@ -59,7 +69,7 @@ const normalizeTelegram = (raw: string): string => {
   return `@${letters}`;
 };
 
-const LeadForm = ({ tripTitle }: LeadFormProps) => {
+const LeadForm = ({ tripDuration, tripTitle, duration, group, rate, interests, budget }: LeadFormProps) => {
   const [leadName, setLeadName] = useState<string>("");
   const [leadPhone, setLeadPhone] = useState<string>("");
   const [leadTg, setLeadTg] = useState<string>("");
@@ -67,6 +77,21 @@ const LeadForm = ({ tripTitle }: LeadFormProps) => {
   const [sent, setSent] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>("");
 
+  const isGroupTrip = Boolean(tripTitle || tripDuration);
+  const groupLabel = tripTitle ?? tripDuration ?? "";
+  const leadTitle = isGroupTrip
+    ? `[Групповая] ${groupLabel}. ${leadName ? leadName : ""}`
+    : `[Индивидуальная] ${leadName ? leadName : ""}`;
+
+  const valueToEnumId = (dictionary: Record<string, string>, value?: string | null): string | undefined => {
+    if (!value) {
+      return undefined;
+    }
+
+    const entry = Object.entries(dictionary).find(([, label]) => label === value);
+    return entry ? entry[0] : undefined;
+  };
+    
   const handleNameChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const raw = event.target.value;
@@ -112,16 +137,29 @@ const LeadForm = ({ tripTitle }: LeadFormProps) => {
     try {
       setSending(true);
 
-      const tgGlobal = window as unknown as { Telegram?: { WebApp?: unknown } };
-      const isTg = Boolean(tgGlobal?.Telegram?.WebApp);
-
-      await createLead({
-        title: `Заявка: ${tripTitle}`,
+      const payload: Parameters<typeof createLead>[0] = {
+        title: leadTitle,
         name: leadName,
-        phones: [{ value: leadPhone, valueType: "MOBILE" }],
-        comments: leadTg ? `Telegram: ${leadTg}` : undefined,
-        sourceId: isTg ? "TELEGRAM" : "WEB",
-      });
+        phone: leadPhone,
+        telegram: leadTg,
+        source: "TELEGRAM",
+        type: isGroupTrip ? "GROUP" : "INDIVIDUAL",
+      };
+
+      // Индивидуальные предпочтения (передаются, если есть)
+      const mappedGroupId = valueToEnumId(GROUP_STRUCTURE_FIELDS, group ?? undefined);
+      const mappedTempoId = valueToEnumId(TEMPO_FIELDS, rate ?? undefined);
+      const mappedBudgetId = valueToEnumId(BUDGET_FIELDS, budget ?? undefined);
+
+      if (!isGroupTrip) {
+        if (duration) payload.it_duration = duration;
+        if (mappedGroupId) payload.it_group_structure = mappedGroupId;
+        if (mappedTempoId) payload.it_tempo = mappedTempoId;
+        if (interests && interests.length > 0) payload.it_interests = interests.join(", ");
+        if (budget) payload.it_budget = mappedBudgetId;
+      }
+
+      await createLead(payload);
 
       setSent(true);
     } catch {
@@ -129,7 +167,7 @@ const LeadForm = ({ tripTitle }: LeadFormProps) => {
     } finally {
       setSending(false);
     }
-  }, [sending, leadName, leadPhone, leadTg, tripTitle]);
+  }, [sending, leadName, leadPhone, leadTg, tripDuration, tripTitle, duration, group, rate, interests, budget]);
 
   return (
     <div id="lead-form" className={`${cls}`}>
@@ -175,7 +213,7 @@ const LeadForm = ({ tripTitle }: LeadFormProps) => {
 
       <button className={`${cls}__submit`} onClick={handleSubmit}>
         {sent
-          ? "Отправлено! Мы свяжемся с вами."
+          ? "Все получили, уже изучаем!"
           : sending
           ? "Отправка…"
           : "Отправить"}
