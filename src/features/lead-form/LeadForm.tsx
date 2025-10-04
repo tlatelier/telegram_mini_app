@@ -1,4 +1,4 @@
-import { useCallback, useState, type ChangeEvent } from "react";
+import { useCallback, useEffect, useState, type ChangeEvent } from "react";
 import { createLead } from "../../shared/api/services/bitrix";
 import { GROUP_STRUCTURE_FIELDS, TEMPO_FIELDS, BUDGET_FIELDS } from "../../shared/api/services/bitrix/enumeration";
 import "./lead-form.less"
@@ -57,22 +57,23 @@ const formatDomesticPhone = (raw: string): string => {
 
 const nameRegex = /^[A-Za-zА-Яа-яЁё\s]{2,}$/;
 
-const normalizeTelegram = (raw: string): string => {
-  const trimmed = raw.trim();
-  const hasAt = trimmed.startsWith("@");
-  const letters = trimmed.replace(/[^A-Za-zА-Яа-яЁё\s]/g, "");
-
-  if (!letters.length) {
-    return hasAt ? "@" : "";
-  }
-
-  return `@${letters}`;
-};
 
 const LeadForm = ({ tripDuration, tripTitle, duration, group, rate, interests, budget }: LeadFormProps) => {
   const [leadName, setLeadName] = useState<string>("");
   const [leadPhone, setLeadPhone] = useState<string>("");
   const [leadTg, setLeadTg] = useState<string>("");
+  // Автоподстановка Telegram username из WebApp (если открыто в Telegram)
+  useEffect(() => {
+    try {
+      // @ts-ignore
+      const tg = (window as any)?.Telegram?.WebApp;
+      const username: string | undefined = tg?.initDataUnsafe?.user?.username;
+      if (username) {
+        setLeadTg(`@${username}`);
+      }
+    } catch {}
+  }, []);
+
   const [sending, setSending] = useState<boolean>(false);
   const [sent, setSent] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>("");
@@ -104,13 +105,6 @@ const LeadForm = ({ tripDuration, tripTitle, duration, group, rate, interests, b
   const handlePhoneInput = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setLeadPhone(formatDomesticPhone(event.target.value));
-    },
-    []
-  );
-
-  const handleTelegramInput = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setLeadTg(normalizeTelegram(event.target.value));
     },
     []
   );
@@ -197,17 +191,7 @@ const LeadForm = ({ tripDuration, tripTitle, duration, group, rate, interests, b
         required
       />
 
-      <input
-        type="text"
-        inputMode="text"
-        placeholder="Telegram"
-        value={leadTg}
-        autoComplete="off"
-        className={`${cls}__input`}
-        spellCheck={false}
-        onChange={handleTelegramInput}
-        autoCapitalize="none"
-      />
+      {/* Telegram username подставляется автоматически из WebApp и не запрашивается у пользователя */}
 
       {errorMsg && <div style={{ color: "#a6533f" }}>{errorMsg}</div>}
 

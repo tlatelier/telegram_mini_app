@@ -5,6 +5,7 @@
   width: 100dvw;
   height: 100dvh;
 
+
   &__slider {
     position: absolute;
     inset: 0;
@@ -43,6 +44,10 @@
     border: none;
     background: transparent;
     position: relative;
+  }
+  &__nav--disabled {
+    opacity: 0.4;
+    pointer-events: none;
   }
   &__nav::before {
     content: "";

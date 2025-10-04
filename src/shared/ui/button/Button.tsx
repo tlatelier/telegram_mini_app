@@ -2,7 +2,7 @@ import "./button.less";
 
 interface IButton {
   text: string;
-  callback(): void;
+  callback?(): void;
   active?: boolean;
 }
 

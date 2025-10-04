@@ -1,131 +1,81 @@
 import { useMemo, useState } from "react";
 import "./gallery.less";
 
-type Photo = {
-  id: string;
-  src: string;
-  year: number;
-  destination: string; // e.g. "Милан", "Камчатка"
-  span?: { rows?: number; cols?: number };
+const DESTINATIONS: Record<string, string> = {
+  uar: "ЮАР",
+  altai: "Алтай",
+  japan: "Япония",
+  baikal: "Байкал",
+  murmansk: "Мурманск",
+  kamchatka: "Камчатка",
+  uzbekistan: "Узбекистан",
+  azerbaijan: "Азербайджан",
 };
 
-const demoPhotos: Photo[] = [
-  {
-    id: "1",
-    src: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format",
-    year: 2024,
-    destination: "Италия",
-    span: { rows: 36, cols: 2 },
-  },
-  {
-    id: "2",
-    src: "https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba?q=80&w=1200&auto=format",
-    year: 2023,
-    destination: "Камчатка",
-    span: { rows: 24 },
-  },
-  {
-    id: "3",
-    src: "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?q=80&w=1200&auto=format",
-    year: 2024,
-    destination: "Италия",
-    span: { rows: 28 },
-  },
-  {
-    id: "4",
-    src: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format",
-    year: 2022,
-    destination: "Франция",
-    span: { rows: 32, cols: 2 },
-  },
-  {
-    id: "5",
-    src: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format",
-    year: 2023,
-    destination: "Камчатка",
-    span: { rows: 20 },
-  },
-  {
-    id: "6",
-    src: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format",
-    year: 2022,
-    destination: "Франция",
-    span: { rows: 24 },
-  },
-];
+const GLOB_OPTIONS = { eager: true, import: "default" } as const;
+
+// Собираем изображения по направлениям (URL строками)
+const SOURCES = {
+  uar: import.meta.glob("../../../public/images/gallery/uar/*.webp", { eager: true, import: "default" }) as Record<string, string>,
+  altai: import.meta.glob("../../../public/images/gallery/altai/*.webp", { eager: true, import: "default" }) as Record<string, string>,
+  japan: import.meta.glob("../../../public/images/gallery/japan/*.webp", { eager: true, import: "default" }) as Record<string, string>,
+  baikal: import.meta.glob("../../../public/images/gallery/baikal/*.webp", { eager: true, import: "default" }) as Record<string, string>,
+  murmansk: import.meta.glob("../../../public/images/gallery/murmansk/*.webp", { eager: true, import: "default" }) as Record<string, string>,
+  kamchatka: import.meta.glob("../../../public/images/gallery/kamchatka/*.webp", { eager: true, import: "default" }) as Record<string, string>,
+  azerbaijan: import.meta.glob("../../../public/images/gallery/azerbaijan/*.webp", { eager: true, import: "default" }) as Record<string, string>,
+  uzbekistan: import.meta.glob("../../../public/images/gallery/uzbekistan/*.webp", { eager: true, import: "default" }) as Record<string, string>,
+};
+
+const buildSortedUrls = (modules: Record<string, string>): string[] =>
+  Object.entries(modules)
+    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+    .map(([, url]) => url)
+    .filter(Boolean);
 
 const GalleryPage = () => {
-  const [year, setYear] = useState<number | "all">("all");
   const [dest, setDest] = useState<string | "all">("all");
   const [open, setOpen] = useState<null | "year" | "dest">(null);
 
-  const years = useMemo(
-    () =>
-      Array.from(new Set(demoPhotos.map((p) => p.year))).sort((a, b) => b - a),
-    []
-  );
-  const destinations = useMemo(
-    () => Array.from(new Set(demoPhotos.map((p) => p.destination))),
-    []
-  );
+  const imagesByDestination = useMemo(() => {
+    return Object.fromEntries(
+      Object.entries(SOURCES).map(([key, modules]) => [
+        key,
+        buildSortedUrls(modules),
+      ])
+    ) as Record<string, string[]>;
+  }, []);
 
-  const filtered = useMemo(
-    () =>
-      demoPhotos.filter(
-        (p) =>
-          (year === "all" || p.year === year) &&
-          (dest === "all" || p.destination === dest)
-      ),
-    [year, dest]
-  );
+  const allImages = useMemo(() => {
+    return Object.values(imagesByDestination).flat();
+  }, [imagesByDestination]);
+
+  const filtered = useMemo(() => {
+    if (dest === "all") {
+      return allImages;
+    }
+
+    return imagesByDestination[dest] ?? [];
+  }, [allImages, imagesByDestination, dest]);
 
   return (
     <div className="galleryPage">
       <div className="galleryPage__grid">
-        {filtered.slice(0, 50).map((p) => (
+        {filtered.slice(0, 50).map((image) => (
           <div
-            key={p.id}
-            className={[
-              "galleryPage__item",
-              p.span?.rows
-                ? `galleryPage__rows-${p.span.rows}`
-                : "galleryPage__rows-24",
-              p.span?.cols === 2 ? "galleryPage__cols-2" : "",
-            ]
-              .join(" ")
-              .trim()}
+            key={image}
+            className={"galleryPage__item"}
           >
             <img
-              className="galleryPage__img"
-              src={p.src}
-              alt={p.destination}
+              alt={image}
+              src={image}
               loading="lazy"
+              className="galleryPage__img"
             />
           </div>
         ))}
       </div>
 
       <div className="galleryPage__filtersFixed">
-        <button
-          className="button galleryPage__filterBtn"
-          onClick={() => setOpen(open === "year" ? null : "year")}
-        >
-          <svg
-            className="galleryPage__filterIcon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden
-          >
-            <path d="M3 6h18" />
-            <path d="M7 12h10" />
-            <path d="M10 18h4" />
-          </svg>
-          {year === "all" ? "Год" : year}
-        </button>
         <button
           className="button galleryPage__filterBtn"
           onClick={() => setOpen(open === "dest" ? null : "dest")}
@@ -144,43 +94,25 @@ const GalleryPage = () => {
             <path d="M7 12h10" />
             <path d="M10 18h4" />
           </svg>
-          {dest === "all" ? "Направление" : dest}
+          {dest === "all" ? "Направление" : DESTINATIONS[dest] ?? dest}
         </button>
       </div>
 
-      {open === "year" && (
-        <div className="galleryPage__dropdown" onClick={() => setOpen(null)}>
-          <div
-            className={`galleryPage__option ${
-              year === "all" ? "galleryPage__option--active" : ""
-            }`}
-            onClick={(e) => {
-              e.stopPropagation();
-              setYear("all");
-              setOpen(null);
-            }}
-          >
-            Все годы
-          </div>
-          {years.map((y) => (
-            <div
-              key={y}
-              className={`galleryPage__option ${
-                year === y ? "galleryPage__option--active" : ""
-              }`}
-              onClick={(e) => {
-                e.stopPropagation();
-                setYear(y);
-                setOpen(null);
-              }}
-            >
-              {y}
-            </div>
-          ))}
-        </div>
-      )}
       {open === "dest" && (
         <div className="galleryPage__dropdown" onClick={() => setOpen(null)}>
+          {Object.entries(DESTINATIONS).map(([ key, value]) => (
+              <div
+                  key={key}
+                  className={`galleryPage__option ${dest === key ? "galleryPage__option--active" : ""}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDest(key);
+                    setOpen(null);
+                  }}
+              >
+                {value}
+              </div>
+          ))}
           <div
             className={`galleryPage__option ${
               dest === "all" ? "galleryPage__option--active" : ""
@@ -193,24 +125,9 @@ const GalleryPage = () => {
           >
             Все направления
           </div>
-          {destinations.map((d) => (
-            <div
-              key={d}
-              className={`galleryPage__option ${
-                dest === d ? "galleryPage__option--active" : ""
-              }`}
-              onClick={(e) => {
-                e.stopPropagation();
-                setDest(d);
-                setOpen(null);
-              }}
-            >
-              {d}
-            </div>
-          ))}
         </div>
       )}
-    </div>
+    </div>  
   );
 };
 

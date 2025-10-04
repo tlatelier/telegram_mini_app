@@ -1,11 +1,12 @@
 import { useMemo, useState } from "react";
 import type { TripId } from "../../entities/trip/model/type.h.ts";
-import { activeTripData, activeTripDetails } from "../../entities/trip/model/data.ts";
+import { activeTripData, tripDetails, inactiveTripData } from "../../entities/trip/model/data.ts";
 import { LeadForm } from "../../features/lead-form/LeadForm.tsx";
 import { FAQ } from "../../shared/ui/faq/FAQ.tsx";
 import { ProgramOverlay } from "../../widgets/program-overlay/ProgramOverlay.tsx";
+import { AutoCarousel } from "../../shared/ui/carousel/AutoCarousel.tsx";
+
 import "./trip-details.less";
-import { Gallery } from "../../shared/ui/gallery/Gallery.tsx";
 
 const FAQ_ITEMS: { q: string; a: string }[] = [
   {
@@ -37,8 +38,8 @@ type TripDetailsPageProps = {
 };
 
 const TripDetailsPage = ({ tripId }: TripDetailsPageProps) => {
-  const trip = activeTripData.find((t) => t.id === tripId);
-  const details = activeTripDetails.find((d) => d.id === tripId);
+  const trip = [...activeTripData, ...inactiveTripData].find((t) => t.id === tripId);
+  const details = tripDetails.find((d) => d.id === tripId);
   const [overlay, setOverlay] = useState<number | null>(null);
 
   const days = useMemo(() => details?.days ?? [], [details]);
@@ -53,7 +54,7 @@ const TripDetailsPage = ({ tripId }: TripDetailsPageProps) => {
 
       {trip.gallery && trip.gallery.length > 0 && (
         <div style={{ position: "relative" }}>
-          <Gallery images={trip.gallery} showControls={false} />
+          <AutoCarousel images={trip.gallery} intervalMs={2500} height={500} backgroundFit="cover" hasMask={true} />
           <div className={`${cls}__gallery-caption`}>
             <div className={`${cls}__gallery-title`}>
               {trip.title ?? trip.destination}
@@ -91,7 +92,7 @@ const TripDetailsPage = ({ tripId }: TripDetailsPageProps) => {
         </div>
         <div className={`${cls}__fact`}>
           <div className={`${cls}__fact-title`}>
-            {trip.priceFrom ? `$${trip.priceFrom}` : "По запросу"}
+            {trip.priceFrom ? `${trip.currency === 'USD' ? '$' : '₽'}${trip.priceFrom}` : "По запросу"}
           </div>
           <div className={`${cls}__fact-sub`}>Стоимость</div>
         </div>
@@ -170,6 +171,6 @@ const TripDetailsPage = ({ tripId }: TripDetailsPageProps) => {
   );
 };
 
-export { TripDetailsPage };
-
-// Overlay moved to components/ProgramOverlay
+export { 
+  TripDetailsPage,
+ };

@@ -1,0 +1,65 @@
+.carousel {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+
+  &__track {
+    display: flex;
+    transition: transform 300ms ease;
+    will-change: transform;
+  }
+
+  &__item {
+    min-width: 100%;
+  }
+
+  &__arrows {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    right: 12px;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &__nav {
+    pointer-events: auto;
+    height: 44px;
+    width: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.85);
+    position: relative;
+  }
+
+  &__nav::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    border-left: 3px solid rgba(0, 0, 0, 0.75);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.75);
+    transform-origin: center;
+  }
+
+  &__nav--left::before {
+    transform: translate(-25%, -50%) rotate(45deg);
+  }
+  
+  &__nav--right::before {
+    transform: translate(-75%, -50%) rotate(-135deg);
+  }
+
+  &__mask {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 5%, rgba(0, 0, 0, 0) 40%);
+  }
+}
+
+

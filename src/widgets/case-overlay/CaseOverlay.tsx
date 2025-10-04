@@ -1,5 +1,5 @@
 import { Button } from "../../shared/ui/button/Button";
-import { Overlay } from "../../features/overlay/Overlay";
+import { OverlayCarousel } from "../../features/overlay/OverlayCarousel";
 import "./case-overlay.less";
 
 const cls = "caseOverlay";
@@ -29,26 +29,20 @@ export const CaseOverlay = ({
 
   return (
     <div className={`${cls}`}>
-      <Overlay
+      <OverlayCarousel
+        images={days.map((d) => d.photo ?? "")}
         active={active}
-        slides={days.map((d) => (
-          <>
-            <div
-              className={`${cls}__bg`}
-              style={{ backgroundImage: `url(${d.photo ?? ""})` }}
-            />
-            <div className={`${cls}__mask`} />
-          </>
-        ))}
+        onChange={() => {}}
         onPrev={onPrev}
         onNext={onNext}
         renderContent={() => (
           <>
+            <div className={`${cls}__metaTop`}>
+              <div className={`${cls}__title`}>{title}</div>
+              {meta && <div className={`${cls}__meta`}>{meta}</div>}
+            </div>
             <div className={`${cls}__content`}>
-              <div className={`${cls}__metaTop`}>
-                <div className={`${cls}__title`}>{title}</div>
-                {meta && <div className={`${cls}__meta`}>{meta}</div>}
-              </div>
+              <div className={`${cls}__mask`} />
               <div className={`${cls}__meta`}>{`День ${active + 1} — ${
                 current?.title ?? ""
               }`}</div>
