@@ -1,101 +1,100 @@
 .caseOverlay {
-  &__metaTop {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    padding: 16px 14px;
-    color: #fff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  }
-  &__bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: saturate(0.9);
-  }
-  &__mask {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.25) 0%,
-      rgba(0, 0, 0, 0.65) 60%
-    );
-  }
-  &__content {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 6px;
-    color: #fff;
-    padding: 24px 16px 92px 16px;
-    text-align: left;
-  }
-  &__title {
-    font-size: 20px;
-    font-weight: 800;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  }
-  &__meta {
-    font-size: 14px;
-    opacity: 0.9;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  }
-  &__text {
-    max-width: 720px;
-    opacity: 0.95;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-  }
-  &__actions {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-column-gap: 8px;
-    padding: 15px 12px 25px;
-  }
-  &__btn--secondary .button {
-    background: #ffffff;
-    color: #1c1c1c;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-  }
-  &__btn--primary .button {
-    background: #a6533f;
-    color: #ffffff;
-    border-color: #a6533f;
-  }
-  &__close {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    height: 42px;
-    width: 42px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(0, 0, 0, 0.35);
-  }
-  &__close::before,
-  &__close::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 22px;
-    height: 2px;
-    background: #fff;
-    transform-origin: center;
-  }
-  &__close::before {
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-  &__close::after {
-    transform: translate(-50%, -50%) rotate(-45deg);
-  }
+    &__metaTop {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        padding: 16px 14px;
+        color: #fff;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+
+        z-index: 1
+    }
+    &__bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: saturate(0.9);
+    }
+    &__mask {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.65) 60%);
+    }
+    &__content {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 6px;
+        color: #fff;
+        padding: 24px 16px 92px 16px;
+        text-align: left;
+    }
+    &__title {
+        font-size: 20px;
+        font-weight: 800;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    }
+    &__meta {
+        font-size: 16px;
+        font-weight: 700;
+        opacity: 0.9;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    }
+    &__text {
+        max-width: 720px;
+        opacity: 0.95;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    }
+    &__actions {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-column-gap: 8px;
+        padding: 15px 12px 25px;
+    }
+    &__btn--secondary .button {
+        background: #ffffff;
+        color: #1c1c1c;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+    &__btn--primary .button {
+        background: #a6533f;
+        color: #ffffff;
+        border-color: #a6533f;
+    }
+    &__close {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        height: 42px;
+        width: 42px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(0, 0, 0, 0.35);
+    }
+    &__close::before,
+    &__close::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 22px;
+        height: 2px;
+        background: #fff;
+        transform-origin: center;
+    }
+    &__close::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+    &__close::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
 }
