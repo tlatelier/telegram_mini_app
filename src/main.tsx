@@ -1,6 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { App } from "./App.tsx";
+import { StartPage } from "./pages/start/StartPage";
+import { PrivateTripsPage } from "./pages/private/PrivateTripsPage";
+import { GalleryPage } from "./pages/gallery/GalleryPage";
+import { TripDetailsPage } from "./pages/trip/TripDetailsPage";
 import "./app/styles/normalize.less";
 import "./app/styles/typography.less";
 
@@ -14,8 +19,24 @@ import "./app/styles/typography.less";
     } catch {}
 })();
 
+const router = createBrowserRouter(
+    [
+        {
+            path: "/",
+            element: <App />,
+            children: [
+                { index: true, element: <StartPage /> },
+                { path: "private", element: <PrivateTripsPage /> },
+                { path: "gallery", element: <GalleryPage /> },
+                { path: "trip/:id", element: <TripDetailsPage /> },
+            ],
+        },
+    ],
+    { basename: import.meta.env.BASE_URL },
+);
+
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <App />
+        <RouterProvider router={router} />
     </StrictMode>,
 );

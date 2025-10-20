@@ -4,17 +4,17 @@ const activeTripData_argentina: TripDataType = {
     id: "argentina-dec-1",
     isActive: true,
     date: "25 декабря",
-    background: "images/trips/active/argentina/promo/promo1.webp",
+    background: "/images/trips/active/argentina/promo/promo1.webp",
     destination: "Аргентина",
     title: "От Буэнос-Айреса до края света",
     dateStart: "25 декабря",
     dateEnd: "10 января",
     gallery: [
-        "images/trips/active/argentina/promo/promo1.webp",
-        "images/trips/active/argentina/promo/promo2.webp",
-        "images/trips/active/argentina/promo/promo3.webp",
-        "images/trips/active/argentina/promo/promo4.webp",
-        "images/trips/active/argentina/promo/promo5.webp",
+        "/images/trips/active/argentina/promo/promo1.webp",
+        "/images/trips/active/argentina/promo/promo2.webp",
+        "/images/trips/active/argentina/promo/promo3.webp",
+        "/images/trips/active/argentina/promo/promo4.webp",
+        "/images/trips/active/argentina/promo/promo5.webp",
     ],
     priceFrom: 6600,
     currency: "USD",
@@ -45,7 +45,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "Это путешествие — ворота в другой континент, где нас ждёт совсем иной ритм жизни.",
                 "Перелёт станет первой ступенью к большому приключению.",
             ],
-            photo: "images/trips/active/argentina/programm/programm1.webp",
+            photo: "/images/trips/active/argentina/programm/programm1.webp",
         },
         {
             title: "Прилет и первые впечатления",
@@ -54,7 +54,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "Отдых после долгого перелёта в одном из самых элегантных районов столицы.",
                 "Вечером — ужин в местном ресторане и первые знакомства с культурой города.",
             ],
-            photo: "images/trips/active/argentina/programm/programm2.webp",
+            photo: "/images/trips/active/argentina/programm/programm2.webp",
         },
         {
             title: "Сан-Тельмо и Ла-Бока",
@@ -63,7 +63,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "От аристократического Сан-Тельмо с его антикварными лавками до яркой и фотогеничной Ла-Боки, где зародилось уличное танго.",
                 "Вечером свободное время для самостоятельных открытий и ужин.",
             ],
-            photo: "images/trips/active/argentina/programm/programm3.webp",
+            photo: "/images/trips/active/argentina/programm/programm3.webp",
         },
         {
             title: "Элегантный Буэнос-Айрес",
@@ -72,7 +72,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "Нас ждёт прогулка по Палермо с его арт-пространствами и культовый цветок Floralis Genérica.",
                 "Вечером — ужин с танго-шоу в легендарном Café de los Angelitos.",
             ],
-            photo: "images/trips/active/argentina/programm/programm4.webp",
+            photo: "/images/trips/active/argentina/programm/programm4.webp",
         },
         {
             title: "День гаучо на ранчо",
@@ -81,7 +81,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "Аутентичный день с асадо на углях, шоу с лошадьми и традициями аргентинских ковбоев.",
                 "После активной программы можно отдохнуть у бассейна или прогуляться вдоль реки Ареко.",
             ],
-            photo: "images/trips/active/argentina/programm/programm5.webp",
+            photo: "/images/trips/active/argentina/programm/programm5.webp",
         },
         {
             title: "Путешествие в Патагонию",
@@ -90,7 +90,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "Джип-сафари к горе Фриас подарит панорамы озера Аргентино, Анд и легендарного Фиц-Роя.",
                 "Вечером — ужин и отдых в отеле с видом на патагонские пейзажи.",
             ],
-            photo: "images/trips/active/argentina/programm/programm6.webp",
+            photo: "/images/trips/active/argentina/programm/programm6.webp",
         },
         {
             title: "Ледовое сафари",
@@ -99,7 +99,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "На борту нас ждёт гурмэ-обед, фотосессия и редкое зрелище рождения айсбергов.",
                 "Завершим день у знаменитого Перито-Морено, наблюдая за его ледяными обрушениями.",
             ],
-            photo: "images/trips/active/argentina/programm/programm7.webp",
+            photo: "/images/trips/active/argentina/programm/programm7.webp",
         },
         {
             title: "Первый день Нового года",
@@ -108,7 +108,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "Здесь сохранились наскальные рисунки первых жителей региона — индейцев теуельче.",
                 "Обед в пещере среди живой истории станет особенным опытом.",
             ],
-            photo: "images/trips/active/argentina/programm/programm8.webp",
+            photo: "/images/trips/active/argentina/programm/programm8.webp",
         },
         {
             title: "Край Света — Ушуайя",
@@ -117,7 +117,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "По пути гид познакомит нас с местными особенностями и проведёт небольшую экскурсию по городу.",
                 "Вечером — размещение в отеле и ужин.",
             ],
-            photo: "images/trips/active/argentina/programm/programm9.webp",
+            photo: "/images/trips/active/argentina/programm/programm9.webp",
         },
         {
             title: "Национальный парк Огненной Земли",
@@ -126,7 +126,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "Важная часть дня — поездка на легендарном «Поезде к Концу Света» с панорамными окнами.",
                 "История и природа сливаются в уникальный опыт.",
             ],
-            photo: "images/trips/active/argentina/programm/programm10.webp",
+            photo: "/images/trips/active/argentina/programm/programm10.webp",
         },
         {
             title: "Встреча с пингвинами",
@@ -135,7 +135,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "Посещение исторического ранчо Харбертон и музея фауны с коллекцией редких животных.",
                 "Живописная дорога и история первых поселенцев Огненной Земли дополнят впечатления.",
             ],
-            photo: "images/trips/active/argentina/programm/programm11.webp",
+            photo: "/images/trips/active/argentina/programm/programm11.webp",
         },
         {
             title: "Переезд к водопадам Игуасу",
@@ -144,7 +144,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "Контраст между суровой Патагонией и тропическими джунглями станет ярким переходом.",
                 "Вечером — отдых в отеле и ужин.",
             ],
-            photo: "images/trips/active/argentina/programm/programm12.webp",
+            photo: "/images/trips/active/argentina/programm/programm12.webp",
         },
         {
             title: "День отдыха в Игуасу",
@@ -153,7 +153,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "Можно провести день у бассейна, насладиться процедурами в SPA или погулять по городу.",
                 "Лёгкий день для восстановления сил перед новыми приключениями.",
             ],
-            photo: "images/trips/active/argentina/programm/programm13.webp",
+            photo: "/images/trips/active/argentina/programm/programm13.webp",
         },
         {
             title: "Бразильская сторона водопадов",
@@ -162,7 +162,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "Увидим легендарную Глотку Дьявола, 275 каскадов водопадов и радуги в брызгах воды.",
                 "В завершение — визит в Парк птиц с туканами и редкими попугаями.",
             ],
-            photo: "images/trips/active/argentina/programm/programm14.webp",
+            photo: "/images/trips/active/argentina/programm/programm14.webp",
         },
         {
             title: "Катер под водопадом",
@@ -171,7 +171,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "Два часа настоящего экстрима среди бурлящей воды.",
                 "Последний вечер у водопадов перед возвращением в столицу.",
             ],
-            photo: "images/trips/active/argentina/programm/programm15.webp",
+            photo: "/images/trips/active/argentina/programm/programm15.webp",
         },
         {
             title: "Возвращение в Буэнос-Айрес",
@@ -180,7 +180,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "По желанию — посещение музея MALBA с гидом.",
                 "Спокойный день для завершения путешествия.",
             ],
-            photo: "images/trips/active/argentina/programm/programm16.webp",
+            photo: "/images/trips/active/argentina/programm/programm16.webp",
         },
         {
             title: "До скорой встречи, Аргентина",
@@ -189,7 +189,7 @@ const tripDetails_argentina: TripDetailsType = {
                 "Аргентина провожает нас словами «hasta luego» — до скорой встречи.",
                 "В багаже — сотни фотографий и тысячи эмоций.",
             ],
-            photo: "images/trips/active/argentina/programm/programm17.webp",
+            photo: "/images/trips/active/argentina/programm/programm17.webp",
         },
     ],
 };

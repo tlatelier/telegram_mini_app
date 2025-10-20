@@ -13,11 +13,14 @@
     "images:webp": "node ./scripts/convert-images-to-webp.mjs",
     "images:webp:high": "WEBP_QUALITY=90 node ./scripts/convert-images-to-webp.mjs",
     "images:webp:lossless": "WEBP_LOSSLESS=true node ./scripts/convert-images-to-webp.mjs",
+    "images:webp:recompress": "WEBP_QUALITY=75 EFFORT=6 node ./scripts/convert-images-to-webp.mjs",
+    "images:webp:resize": "MAX_WIDTH=2048 MAX_HEIGHT=2048 WEBP_QUALITY=80 node ./scripts/convert-images-to-webp.mjs",
     "images:rename": "node ./scripts/rename-images.mjs"
   },
   "dependencies": {
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^6.26.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { TripId } from "../../entities/trip/model/type.h.ts";
+import { useParams } from "react-router-dom";
 import { activeTripData, tripDetails, inactiveTripData } from "../../entities/trip/model/index.ts";
 import { LeadForm } from "../../features/lead-form/LeadForm.tsx";
 import { FAQ } from "../../shared/ui/faq/FAQ.tsx";
@@ -33,11 +33,8 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
 
 const cls = "tripDetailsPage";
 
-type TripDetailsPageProps = {
-    tripId: TripId;
-};
-
-const TripDetailsPage = ({ tripId }: TripDetailsPageProps) => {
+const TripDetailsPage = () => {
+    const { id: tripId } = useParams();
     const trip = [...activeTripData, ...inactiveTripData].find((t) => t.id === tripId);
     const details = tripDetails.find((d) => d.id === tripId);
     const [overlay, setOverlay] = useState<number | null>(null);

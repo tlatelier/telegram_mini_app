@@ -81,7 +81,7 @@ const CASES: CaseCard[] = [
     {
         id: "c3",
         title: "ЮАР",
-        meta: "11 дней · 3 человека · 3 столицы",
+        meta: "11 дней · 3 человека · 4 региона",
         img: "images/private/previous/uar/private-previous-uar-3.webp",
         highlights: ["Пляж с пингвинами", "Винодельни и дегустации", "Сафари с дикими животными"],
         days: [
@@ -412,8 +412,10 @@ const PrivateTripsPage = () => {
                     {BENEFITS.map((b, i) => (
                         <div key={i} className={`${cls}__benefit`}>
                             <div className={`${cls}__benefitIcon`}>{b.icon}</div>
-                            <div className={`${cls}__benefitTitle`}>{b.title}</div>
-                            <div className={`${cls}__benefitText`}>{b.text}</div>
+                            <div className={`${cls}__benefitBody`}>
+                                <div className={`${cls}__benefitTitle`}>{b.title}</div>
+                                <div className={`${cls}__benefitText`}>{b.text}</div>
+                            </div>
                         </div>
                     ))}
                 </div>

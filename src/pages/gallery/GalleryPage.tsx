@@ -12,49 +12,25 @@ const DESTINATIONS: Record<string, string> = {
     azerbaijan: "Азербайджан",
 };
 
-const GLOB_OPTIONS = { eager: true, import: "default" } as const;
+const BASE_URL: string = (import.meta as any)?.env?.BASE_URL ?? "/";
+type DestinationKey = keyof typeof DESTINATIONS;
+type DestConfig = { dir: string; count: number; fileName: (i: number) => string };
 
-// Собираем изображения по направлениям (URL строками)
-const SOURCES = {
-    uar: import.meta.glob("../../../public/images/gallery/uar/*.webp", {
-        eager: true,
-        import: "default",
-    }) as Record<string, string>,
-    altai: import.meta.glob("../../../public/images/gallery/altai/*.webp", {
-        eager: true,
-        import: "default",
-    }) as Record<string, string>,
-    japan: import.meta.glob("../../../public/images/gallery/japan/*.webp", {
-        eager: true,
-        import: "default",
-    }) as Record<string, string>,
-    baikal: import.meta.glob("../../../public/images/gallery/baikal/*.webp", {
-        eager: true,
-        import: "default",
-    }) as Record<string, string>,
-    murmansk: import.meta.glob("../../../public/images/gallery/murmansk/*.webp", {
-        eager: true,
-        import: "default",
-    }) as Record<string, string>,
-    kamchatka: import.meta.glob("../../../public/images/gallery/kamchatka/*.webp", {
-        eager: true,
-        import: "default",
-    }) as Record<string, string>,
-    azerbaijan: import.meta.glob("../../../public/images/gallery/azerbaijan/*.webp", {
-        eager: true,
-        import: "default",
-    }) as Record<string, string>,
-    uzbekistan: import.meta.glob("../../../public/images/gallery/uzbekistan/*.webp", {
-        eager: true,
-        import: "default",
-    }) as Record<string, string>,
+const DEST_CONFIGS: Record<DestinationKey, DestConfig> = {
+    uar: { dir: "uar", count: 60, fileName: (i) => `gallery_uar_${i}.webp` },
+    altai: { dir: "altai", count: 23, fileName: (i) => `gallery-altai-${i}.webp` },
+    japan: { dir: "japan", count: 49, fileName: (i) => `gallery_japan_${i}.webp` },
+    baikal: { dir: "baikal", count: 29, fileName: (i) => `gallery-baikal-${i}.webp` },
+    murmansk: { dir: "murmansk", count: 18, fileName: (i) => `gallery-murmansk-${i}.webp` },
+    kamchatka: { dir: "kamchatka", count: 17, fileName: (i) => `gallery-kamchatka-${i}.webp` },
+    uzbekistan: { dir: "uzbekistan", count: 25, fileName: (i) => `gallery-uzbekistan-${i}.webp` },
+    azerbaijan: { dir: "azerbaijan", count: 20, fileName: (i) => `gallery-azerbaijan-${i}.webp` },
 };
 
-const buildSortedUrls = (modules: Record<string, string>): string[] =>
-    Object.entries(modules)
-        .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
-        .map(([, url]) => url)
-        .filter(Boolean);
+const buildUrls = (dir: string, count: number, fileName: (i: number) => string): string[] =>
+    Array.from({ length: count }, (_, idx) => `${BASE_URL}images/gallery/${dir}/${fileName(idx + 1)}`);
+
+//
 
 const GalleryPage = () => {
     const [dest, setDest] = useState<string | "all">("all");
@@ -62,7 +38,10 @@ const GalleryPage = () => {
 
     const imagesByDestination = useMemo(() => {
         return Object.fromEntries(
-            Object.entries(SOURCES).map(([key, modules]) => [key, buildSortedUrls(modules)]),
+            (Object.keys(DESTINATIONS) as DestinationKey[]).map((key) => {
+                const cfg = DEST_CONFIGS[key];
+                return [key, buildUrls(cfg.dir, cfg.count, cfg.fileName)];
+            }),
         ) as Record<string, string[]>;
     }, []);
 
@@ -80,13 +59,31 @@ const GalleryPage = () => {
 
     return (
         <div className="galleryPage">
-            <div className="galleryPage__grid">
-                {filtered.slice(0, 50).map((image) => (
-                    <div key={image} className={"galleryPage__item"}>
-                        <img alt={image} src={image} loading="lazy" className="galleryPage__img" />
-                    </div>
-                ))}
+      {(() => {
+        const left: string[] = [];
+        const right: string[] = [];
+        filtered.slice(0, 50).forEach((img, idx) => {
+          (idx % 2 === 0 ? left : right).push(img);
+        });
+        return (
+          <div className="galleryPage__columns">
+            <div className="galleryPage__col">
+              {left.map((image) => (
+                <div key={image} className={"galleryPage__item"}>
+                  <img alt={image} src={image} loading="lazy" className="galleryPage__img" />
+                </div>
+              ))}
             </div>
+            <div className="galleryPage__col">
+              {right.map((image) => (
+                <div key={image} className={"galleryPage__item"}>
+                  <img alt={image} src={image} loading="lazy" className="galleryPage__img" />
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
 
             <div className="galleryPage__filters">
                 <div className="galleryPage__filtersFixed">

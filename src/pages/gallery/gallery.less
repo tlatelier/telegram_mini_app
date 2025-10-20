@@ -4,7 +4,6 @@
     gap: 12px;
     padding: 12px;
     padding-bottom: calc(12px + 56px + 72px + env(safe-area-inset-bottom, 0px));
-
     &__filters {
         position: fixed;
         left: 0;
@@ -17,7 +16,6 @@
         width: 100%;
         max-width: 726px;
     }
-
     &__filtersFixed {
         backdrop-filter: saturate(180%) blur(10px);
         box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
@@ -40,13 +38,19 @@
         margin-right: 8px;
     }
 
-    &__grid {
-        column-count: 3;
-        column-gap: 8px;
+    &__columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    &__col {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
     @media (max-width: 720px) {
-        &__grid {
-            column-count: 2;
+        &__columns {
+            grid-template-columns: 1fr 1fr;
         }
     }
 
@@ -82,13 +86,10 @@
 
     &__item {
         position: relative;
-        display: inline-block;
         width: 100%;
-        margin: 0 0 8px;
         border-radius: 12px;
         overflow: hidden;
         background: #f0f0f0;
-        break-inside: avoid;
     }
     &__img {
         width: 100%;

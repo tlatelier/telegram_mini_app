@@ -161,11 +161,25 @@ const LeadForm = (props: LeadFormProps) => {
             const mappedBudgetId = valueToEnumId(BUDGET_FIELDS, budget ?? undefined);
 
             if (!isGroupTrip) {
-                if (duration) payload.it_duration = duration;
-                if (budget) payload.it_budget = mappedBudgetId;
-                if (mappedTempoId) payload.it_tempo = mappedTempoId;
-                if (mappedGroupId) payload.it_group_structure = mappedGroupId;
-                if (interests && interests.length > 0) payload.it_interests = interests.join(", ");
+                if (mappedBudgetId) {
+                    payload.it_budget = mappedBudgetId;
+                }
+
+                if (duration) {
+                    payload.it_duration = duration;
+                }
+
+                if (mappedTempoId) {
+                    payload.it_tempo = mappedTempoId;
+                }
+
+                if (mappedGroupId) {
+                    payload.it_group_structure = mappedGroupId;
+                }
+
+                if (interests && interests.length > 0) {
+                    payload.it_interests = interests.join(", ");
+                }
             }
 
             await createLead(payload);

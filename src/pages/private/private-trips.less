@@ -70,7 +70,7 @@
     }
     &__chips {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 8px;
     }
     &__chip {
@@ -145,8 +145,13 @@
     }
     &__benefitGrid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         gap: 8px;
+    }
+    &__benefitBody {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
     }
     &__benefit {
         background: rgba(255, 255, 255, 0.7);
@@ -166,7 +171,7 @@
         width: 28px;
         height: 28px;
         border-radius: 50%;
-        background: #eae7e2;
+        background: #f7f4ef;
 
         font-size: 16px;
     }
