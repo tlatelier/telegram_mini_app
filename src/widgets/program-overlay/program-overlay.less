@@ -15,7 +15,6 @@
 
     &__content {
         position: absolute;
-        inset: 0;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
@@ -23,6 +22,9 @@
         color: #fff;
         padding: 24px 16px 92px 16px;
         text-align: left;
+
+        top: 50vh;
+        bottom: 0;
     }
 
     &__meta {
@@ -34,6 +36,10 @@
     &__text {
         max-width: 720px;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+        /* Чтобы длинные списки не перекрывали контролы — ограничиваем высоту и включаем прокрутку */
+        max-height: 25dvh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     /* Форматирование описаний */
@@ -47,6 +53,8 @@
         padding: 0 0 0 18px;
         display: grid;
         gap: 6px;
+        /* Немного отступа снизу, чтобы скролл не упирался в кнопку */
+        padding-bottom: 8px;
     }
 
     &__li {
@@ -72,6 +80,12 @@
         grid-template-columns: 1fr 2fr;
     }
 
+    /* Широкая дополнительная кнопка на финальном слайде */
+    &__btn--wide {
+        grid-column: 1 / -1;
+        margin-top: 8px;
+    }
+
     /* Финальный экран */
     &__final {
         position: absolute;
@@ -79,9 +93,10 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        gap: 12px;
+        gap: 16px;
         color: #fff;
         padding: 24px 16px 92px 16px;
+        overflow: hidden;
     }
 
     &__finalMask {
@@ -93,6 +108,7 @@
     &__finalTitle {
         font-size: 18px;
         font-weight: 800;
+        margin-bottom: 4px;
     }
 
     &__finalList {
@@ -100,10 +116,37 @@
         padding: 0 0 0 18px;
         display: grid;
         gap: 6px;
+
+        list-style: none;
     }
 
     &__finalItem {
         line-height: 1.45;
+    }
+
+    /* Прокрутка для нескольких секций */
+    &__final {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Оффер */
+    &__offer {
+        display: grid;
+        gap: 10px;
+    }
+
+    &__scarcity {
+        margin-top: 4px;
+        font-weight: 700;
+        color: #ffd59a;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    }
+
+    &__quote {
+        margin-top: 2px;
+        font-style: italic;
+        opacity: 0.9;
     }
 
     &__btn--secondary .button {

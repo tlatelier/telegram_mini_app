@@ -8,29 +8,6 @@ import { AutoCarousel } from "../../shared/ui/carousel/AutoCarousel.tsx";
 
 import "./trip-details.less";
 
-const FAQ_ITEMS: { q: string; a: string }[] = [
-    {
-        q: "Что включено в стоимость?",
-        a: "Проживание, программа, сопровождение гида. Перелёт и питание оговариваются дополнительно.",
-    },
-    {
-        q: "Размер группы?",
-        a: "Обычно 8–12 человек для комфортного темпа и логистики.",
-    },
-    {
-        q: "Можно ли с детьми?",
-        a: "Да, но детали маршрута и возраст согласуем заранее.",
-    },
-    {
-        q: "Нужна ли предоплата?",
-        a: "Бронь места подтверждается предоплатой. Остаток — перед стартом поездки.",
-    },
-    {
-        q: "Что по возвратам?",
-        a: "Условия возврата зависят от сроков отмены — пришлю политику по запросу.",
-    },
-];
-
 const cls = "tripDetailsPage";
 
 const TripDetailsPage = () => {
@@ -41,6 +18,21 @@ const TripDetailsPage = () => {
 
     const days = useMemo(() => details?.days ?? [], [details]);
     const highlights = useMemo(() => details?.highlights ?? [], [details]);
+    const faqItems = useMemo(() => {
+        const faq = details?.faq ?? [];
+        return faq.map((f) => ({
+            q: f.question,
+            a: Array.isArray(f.answer) ? (
+                <ul>
+                    {f.answer.map((item, idx) => (
+                        <li key={idx}>{item}</li>
+                    ))}
+                </ul>
+            ) : (
+                f.answer
+            ),
+        }));
+    }, [details]);
 
     if (!trip) {
         return <div>Тур не найден</div>;
@@ -85,7 +77,7 @@ const TripDetailsPage = () => {
 
             <div className={`${cls}__facts`}>
                 <div className={`${cls}__fact`}>
-                    <div className={`${cls}__fact-title`}>{days.length}</div>
+                    <div className={`${cls}__fact-title`}>{trip.duration ?? days.length}</div>
                     <div className={`${cls}__fact-sub`}>Дней</div>
                 </div>
                 <div className={`${cls}__fact`}>
@@ -144,7 +136,7 @@ const TripDetailsPage = () => {
 
             <LeadForm tripTitle={trip.title ?? trip.destination} />
 
-            <FAQ items={FAQ_ITEMS} />
+            {faqItems.length > 0 && <FAQ items={faqItems} />}
 
             {overlay !== null && (
                 <ProgramOverlay
@@ -159,6 +151,8 @@ const TripDetailsPage = () => {
                         )
                     }
                     onNext={() => setOverlay((i) => (i === null ? 0 : (i + 1) % days.length))}
+                    extras={details?.extras}
+                    offer={details?.finalOffer}
                 />
             )}
         </div>

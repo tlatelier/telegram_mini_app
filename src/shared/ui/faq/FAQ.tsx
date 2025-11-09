@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import "./faq.less";
 
 const cls = "faq";
 
-type FAQItem = { q: string; a: string };
+type FAQItem = { q: string; a: ReactNode };
 
 type FAQProps = {
     items: FAQItem[];

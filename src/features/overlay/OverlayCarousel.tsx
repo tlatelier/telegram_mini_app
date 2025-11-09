@@ -11,8 +11,9 @@ type OverlayCarouselProps = {
     onChange: (index: number) => void;
     onPrev: () => void;
     onNext: () => void;
-    renderContent?: (activeIndex: number) => any;
+    renderContent?: (activeIndex: number) => ReactNode;
     onLastNext?: () => void;
+    hideArrowsOnLast?: boolean;
 };
 
 export const OverlayCarousel = ({
@@ -23,6 +24,7 @@ export const OverlayCarousel = ({
     onNext,
     renderContent,
     onLastNext,
+    hideArrowsOnLast = false,
 }: OverlayCarouselProps) => {
     const isLast = active >= images.length - 1;
     const isFirst = active <= 0;
@@ -42,6 +44,7 @@ export const OverlayCarousel = ({
                 />
             </div>
 
+            {!(hideArrowsOnLast && isLast) && (
             <div className={`${baseClass}__arrows`}>
                 <button
                     className={`${baseClass}__nav ${baseClass}__nav--left${isFirst ? ` ${baseClass}__nav--disabled` : ""}`}
@@ -65,6 +68,7 @@ export const OverlayCarousel = ({
                     aria-disabled={isLast}
                 />
             </div>
+            )}
 
             {renderContent?.(active) ?? null}
         </div>

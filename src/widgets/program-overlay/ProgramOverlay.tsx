@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { Button } from "../../shared/ui/button/Button";
 import { OverlayCarousel } from "../../features/overlay/OverlayCarousel";
 import "./program-overlay.less";
 import { ProgramDaySection } from "./ProgramDaySection.tsx";
@@ -9,7 +8,7 @@ const blockClass = "programOverlay";
 
 export type ProgramOverlayDay = {
     title: string;
-    activities: string[];
+    activities: (string | { strong?: string; text?: string })[];
     photo?: string;
 };
 
@@ -19,10 +18,19 @@ type ProgramOverlayProps = {
     onClose: () => void;
     onPrev: () => void;
     onNext: () => void;
+    extras?: { title: string; items: string[] }[];
+    offer?: {
+        benefits: string[];
+        includes: string[];
+        scarcity?: string;
+        quote?: { text: string; author?: string };
+        ctaPrimaryText?: string;
+        ctaSecondaryText?: string;
+    };
 };
 
 const ProgramOverlay = (props: ProgramOverlayProps) => {
-    const { days, active, onPrev, onNext, onClose } = props;
+    const { days, active, onPrev, onNext, onClose, extras, offer } = props;
 
     const [displayIndex, setDisplayIndex] = useState<number>(active);
 
@@ -100,7 +108,8 @@ const ProgramOverlay = (props: ProgramOverlayProps) => {
                                 displayIndex={displayIndex}
                             />
                         ) : (
-                            <ProgramExtraSection onClose={onClose} parentClass={blockClass} />
+                            <ProgramExtraSection onClose={onClose} parentClass={blockClass} sections={extras} offer={offer}
+                            />
                         )}
                     </>
                 )}

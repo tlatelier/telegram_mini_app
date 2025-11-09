@@ -1,6 +1,6 @@
-import type { FC } from "react";
 import type { ProgramOverlayDay } from "./ProgramOverlay.tsx";
 import { Button } from "../../shared/ui/button/Button.tsx";
+import { useCallback } from "react";
 
 type ProgramDaySectionType = {
     onClose(): void;
@@ -11,6 +11,13 @@ type ProgramDaySectionType = {
 
 const ProgramDaySection = (props: ProgramDaySectionType) => {
     const { day, onClose, parentClass, displayIndex } = props;
+
+    const onScreenClose = useCallback(() => {
+        onClose?.();
+        setTimeout(() => {
+            document.getElementById("lead-form")?.scrollIntoView({ behavior: "smooth" });
+        }, 0);
+    }, [onClose]);
 
     const renderDescription = () => {
         const activities = day?.activities ?? [];
@@ -23,7 +30,9 @@ const ProgramDaySection = (props: ProgramDaySectionType) => {
             <ul className={`${parentClass}__list`}>
                 {activities.map((activity, index) => (
                     <li key={index} className={`${parentClass}__li`}>
-                        {activity}
+                        {typeof activity === "string"
+                            ? activity
+                            : `${activity?.strong ?? ""}${activity?.text ? (activity?.strong ? " — " : "") + activity?.text : ""}`}
                     </li>
                 ))}
             </ul>
@@ -39,9 +48,12 @@ const ProgramDaySection = (props: ProgramDaySectionType) => {
                 </div>
                 <div className={`${parentClass}__text`}>{renderDescription()}</div>
             </div>
-            <div className={`${parentClass}__action`}>
+            <div className={`${parentClass}__actions`}>
                 <div className={`${parentClass}__btn ${parentClass}__btn--secondary`}>
                     <Button text="Закрыть" callback={onClose} />
+                </div>
+                <div className={`${parentClass}__btn ${parentClass}__btn--primary`}>
+                    <Button text="Хочу поехать!" callback={onScreenClose} />
                 </div>
             </div>
         </>
