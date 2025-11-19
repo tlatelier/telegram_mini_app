@@ -1,12 +1,12 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 type TripId = string;
 
 type TripDataType = {
     id: TripId;
-    isActive: boolean;
     date: string;
     background: string;
     destination: string;
+    isActive?: boolean;
     title?: string;
     dateStart?: string;
     dateEnd?: string;
@@ -15,7 +15,7 @@ type TripDataType = {
     currency?: string;
     locationsCount?: number;
     // Отображение статуса на карточке: по умолчанию вычисляется по isActive
-    status?: "upcoming" | "past" | "wip";
+    status?: 'upcoming' | 'wip' | 'past';
     duration?: string;
 };
 
@@ -52,7 +52,7 @@ type TripFinalOfferType = {
     benefits: string[]; // ключевые выгоды тура (3–4 пункта)
     includes: string[]; // короткий список «что входит» (3–4 пункта)
     scarcity?: string; // дефицит/дедлайн
-    quote?: { text: string; author?: string };
+    quote?: { text: string, author?: string };
     ctaPrimaryText?: string; // текст основной кнопки
     ctaSecondaryText?: string; // текст вторичной кнопки
 };
@@ -71,8 +71,8 @@ export type {
     TripDataType,
     TripDayItemType,
     TripDetailsType,
-    TripHighlightItemType,
     TripActivityItem,
-    TripExtraSectionType,
     TripFinalOfferType,
+    TripExtraSectionType,
+    TripHighlightItemType,
 };

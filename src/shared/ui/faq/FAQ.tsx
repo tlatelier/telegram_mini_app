@@ -1,9 +1,9 @@
-import { useState, type ReactNode } from "react";
-import "./faq.less";
+import { useState, type ReactNode } from 'react';
+import './faq.less';
 
-const cls = "faq";
+const cls = 'faq';
 
-type FAQItem = { q: string; a: ReactNode };
+type FAQItem = { q: string, a: ReactNode };
 
 type FAQProps = {
     items: FAQItem[];
@@ -12,12 +12,17 @@ type FAQProps = {
 
 const FAQ = ({ items, defaultOpenIndex = 0 }: FAQProps) => {
     const [openIdx, setOpenIdx] = useState<number | null>(defaultOpenIndex);
+
     return (
         <div className={`${cls}`}>
             {items.map((it, i) => {
                 const open = openIdx === i;
+
                 return (
-                    <div key={i} className={`${cls}__item`}>
+                    <div
+                        key={i}
+                        className={`${cls}__item`}
+                    >
                         <button
                             className={`${cls}__q`}
                             onClick={() => setOpenIdx(open ? null : i)}
@@ -33,4 +38,6 @@ const FAQ = ({ items, defaultOpenIndex = 0 }: FAQProps) => {
     );
 };
 
-export { FAQ };
+export {
+    FAQ,
+};

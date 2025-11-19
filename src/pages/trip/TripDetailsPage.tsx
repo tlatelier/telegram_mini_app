@@ -1,14 +1,16 @@
-import { useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
-import { activeTripData, tripDetails, inactiveTripData } from "../../entities/trip/model/index.ts";
-import { LeadForm } from "../../features/lead-form/LeadForm.tsx";
-import { FAQ } from "../../shared/ui/faq/FAQ.tsx";
-import { ProgramOverlay } from "../../widgets/program-overlay/ProgramOverlay.tsx";
-import { AutoCarousel } from "../../shared/ui/carousel/AutoCarousel.tsx";
+import { useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import {
+    activeTripData, tripDetails, inactiveTripData,
+} from '../../entities/trip/model/index.ts';
+import { LeadForm } from '../../features/lead-form/LeadForm.tsx';
+import { FAQ } from '../../shared/ui/faq/FAQ.tsx';
+import { ProgramOverlay } from '../../widgets/program-overlay/ProgramOverlay.tsx';
+import { AutoCarousel } from '../../shared/ui/carousel/AutoCarousel.tsx';
 
-import "./trip-details.less";
+import './trip-details.less';
 
-const cls = "tripDetailsPage";
+const cls = 'tripDetailsPage';
 
 const TripDetailsPage = () => {
     const { id: tripId } = useParams();
@@ -20,6 +22,7 @@ const TripDetailsPage = () => {
     const highlights = useMemo(() => details?.highlights ?? [], [details]);
     const faqItems = useMemo(() => {
         const faq = details?.faq ?? [];
+
         return faq.map((f) => ({
             q: f.question,
             a: Array.isArray(f.answer) ? (
@@ -43,7 +46,7 @@ const TripDetailsPage = () => {
             <div className={`${cls}__hero`} />
 
             {trip.gallery && trip.gallery.length > 0 && (
-                <div style={{ position: "relative" }}>
+                <div style={{ position: 'relative' }}>
                     <AutoCarousel
                         images={trip.gallery}
                         intervalMs={2500}
@@ -57,7 +60,7 @@ const TripDetailsPage = () => {
                         </div>
                         <div className={`${cls}__gallery-date`}>
                             {trip.dateStart ?? trip.date}
-                            {trip.dateEnd ? ` — ${trip.dateEnd}` : ""}
+                            {trip.dateEnd ? ` — ${trip.dateEnd}` : ''}
                         </div>
                     </div>
                 </div>
@@ -86,9 +89,9 @@ const TripDetailsPage = () => {
                 </div>
                 <div className={`${cls}__fact`}>
                     <div className={`${cls}__fact-title`}>
-                        {trip.priceFrom
-                            ? `${trip.currency === "USD" ? "$" : "₽"}${trip.priceFrom}`
-                            : "По запросу"}
+                        {trip.priceFrom ?
+                            `${trip.currency === 'USD' ? '$' : '₽'}${trip.priceFrom}` :
+                            'По запросу'}
                     </div>
                     <div className={`${cls}__fact-sub`}>Стоимость</div>
                 </div>
@@ -97,7 +100,10 @@ const TripDetailsPage = () => {
             {highlights.length > 0 && (
                 <div className={`${cls}__highlights`}>
                     {highlights.map((h, i) => (
-                        <div key={i} className={`${cls}__highlight`}>
+                        <div
+                            key={i}
+                            className={`${cls}__highlight`}
+                        >
                             <div className={`${cls}__highlight-title`}>{h.title}</div>
                             <div>{h.text}</div>
                         </div>
@@ -113,14 +119,14 @@ const TripDetailsPage = () => {
                     tabIndex={0}
                     aria-label="Смотреть программу"
                     onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
+                        if (e.key === 'Enter' || e.key === ' ') {
                             setOverlay(0);
                         }
                     }}
                 >
                     <div
                         className={`${cls}__programHero-bg`}
-                        style={{ backgroundImage: `url(${days[0].photo ?? ""})` }}
+                        style={{ backgroundImage: `url(${days[0].photo ?? ''})` }}
                     />
                     <div className={`${cls}__programHero-mask`} />
                     <div className={`${cls}__programHero-content`}>
@@ -145,10 +151,9 @@ const TripDetailsPage = () => {
                     onClose={() => setOverlay(null)}
                     onPrev={() =>
                         setOverlay((i) =>
-                            i === null
-                                ? (days.length - 1) % days.length
-                                : (i - 1 + days.length) % days.length,
-                        )
+                            i === null ?
+                                (days.length - 1) % days.length :
+                                (i - 1 + days.length) % days.length)
                     }
                     onNext={() => setOverlay((i) => (i === null ? 0 : (i + 1) % days.length))}
                     extras={details?.extras}
@@ -159,4 +164,6 @@ const TripDetailsPage = () => {
     );
 };
 
-export { TripDetailsPage };
+export {
+    TripDetailsPage,
+};

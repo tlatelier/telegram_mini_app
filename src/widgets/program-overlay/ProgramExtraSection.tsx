@@ -1,22 +1,22 @@
-import { Button } from "../../shared/ui/button/Button.tsx";
-import { useCallback } from "react";
+import { Button } from '../../shared/ui/button/Button.tsx';
+import { useCallback } from 'react';
 
 type ProgramExtraSectionType = {
     onClose(): void;
     parentClass: string;
-    sections?: { title: string; items: string[] }[];
+    sections?: { title: string, items: string[] }[];
     offer?: {
         benefits: string[];
         includes: string[];
         scarcity?: string;
-        quote?: { text: string; author?: string };
+        quote?: { text: string, author?: string };
         ctaPrimaryText?: string;
         ctaSecondaryText?: string;
     };
-    onBackToStart?: () => void;
+    onBackToStart?(): void;
 };
 
-const LEAD_FORM_ID = "lead-form";
+const LEAD_FORM_ID = 'lead-form';
 
 const ProgramExtraSection = (props: ProgramExtraSectionType) => {
     const { onClose, parentClass, sections, offer, onBackToStart } = props;
@@ -25,9 +25,9 @@ const ProgramExtraSection = (props: ProgramExtraSectionType) => {
         onClose?.();
 
         setTimeout(() => {
-            document.getElementById(LEAD_FORM_ID)?.scrollIntoView({ behavior: "smooth" });
+            document.getElementById(LEAD_FORM_ID)?.scrollIntoView({ behavior: 'smooth' });
         }, 0);
-    }, []);
+    }, [onClose]);
 
     return (
         <>
@@ -41,7 +41,10 @@ const ProgramExtraSection = (props: ProgramExtraSectionType) => {
                                 <div className={`${parentClass}__finalTitle`}>{section.title}</div>
                                 <ul className={`${parentClass}__finalList`}>
                                     {section.items.map((it, i) => (
-                                        <li key={i} className={`${parentClass}__finalItem`}>
+                                        <li
+                                            key={i}
+                                            className={`${parentClass}__finalItem`}
+                                        >
                                             {it}
                                         </li>
                                     ))}
@@ -57,14 +60,22 @@ const ProgramExtraSection = (props: ProgramExtraSectionType) => {
                         <div className={`${parentClass}__finalTitle`}>Почему это путешествие стоит того</div>
                         <ul className={`${parentClass}__finalList`}>
                             {offer.benefits?.map((b, i) => (
-                                <li key={i} className={`${parentClass}__finalItem`}>✓ {b}</li>
+                                <li
+                                    key={i}
+                                    className={`${parentClass}__finalItem`}
+                                >✓ {b}
+                                </li>
                             ))}
                         </ul>
 
                         <div className={`${parentClass}__finalTitle`}>Что включено</div>
                         <ul className={`${parentClass}__finalList`}>
                             {offer.includes?.map((b, i) => (
-                                <li key={i} className={`${parentClass}__finalItem`}>• {b}</li>
+                                <li
+                                    key={i}
+                                    className={`${parentClass}__finalItem`}
+                                >• {b}
+                                </li>
                             ))}
                         </ul>
 
@@ -72,20 +83,29 @@ const ProgramExtraSection = (props: ProgramExtraSectionType) => {
                             <div className={`${parentClass}__scarcity`}>{offer.scarcity}</div>
                         )}
                         {offer.quote && (
-                            <div className={`${parentClass}__quote`}>“{offer.quote.text}”{offer.quote.author ? ` — ${offer.quote.author}` : ""}</div>
+                            <div className={`${parentClass}__quote`}>“{offer.quote.text}”{offer.quote.author ? ` — ${offer.quote.author}` : ''}</div>
                         )}
                     </div>
                 )}
             </div>
             <div className={`${parentClass}__actions`}>
                 <div className={`${parentClass}__btn ${parentClass}__btn--secondary`}>
-                    <Button text={offer?.ctaSecondaryText ?? "Закрыть"} callback={onClose} />
+                    <Button
+                        text={offer?.ctaSecondaryText ?? 'Закрыть'}
+                        callback={onClose}
+                    />
                 </div>
                 <div className={`${parentClass}__btn ${parentClass}__btn--primary`}>
-                    <Button text={offer?.ctaPrimaryText ?? "Хочу поехать!"} callback={onScreenClose} />
+                    <Button
+                        text={offer?.ctaPrimaryText ?? 'Хочу поехать!'}
+                        callback={onScreenClose}
+                    />
                 </div>
                 <div className={`${parentClass}__btn ${parentClass}__btn--secondary ${parentClass}__btn--wide`}>
-                    <Button text="К началу программы" callback={onBackToStart} />
+                    <Button
+                        text="К началу программы"
+                        callback={onBackToStart}
+                    />
                 </div>
             </div>
         </>

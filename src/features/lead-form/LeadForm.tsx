@@ -1,13 +1,15 @@
-import { useCallback, useEffect, useState, type ChangeEvent } from "react";
-import { createLead } from "../../shared/api/services/bitrix";
+import {
+    useCallback, useEffect, useState, type ChangeEvent,
+} from 'react';
+import { createLead } from '../../shared/api/services/bitrix';
 import {
     GROUP_STRUCTURE_FIELDS,
     TEMPO_FIELDS,
     BUDGET_FIELDS,
-} from "../../shared/api/services/bitrix/enumeration";
-import "./lead-form.less";
+} from '../../shared/api/services/bitrix/enumeration';
+import './lead-form.less';
 
-const cls = "leadForm";
+const cls = 'leadForm';
 
 const SENT_BUTTON_RESET_DELAY = 3000;
 
@@ -25,22 +27,22 @@ type LeadFormProps = {
 };
 
 const extractDigits = (value: string): string => {
-    return value.replace(/\D/g, "");
+    return value.replace(/\D/g, '');
 };
 
 const formatDomesticPhone = (raw: string): string => {
     const digits = extractDigits(raw);
 
     let national = digits;
-    const isInternational = digits.startsWith("8") || digits.startsWith("7");
+    const isInternational = digits.startsWith('8') || digits.startsWith('7');
 
     if (digits.length > 11 || !isInternational) {
         return digits;
     } else if (isInternational) {
-        national = digits.replace(/^8|^7/, "+7");
+        national = digits.replace(/^8|^7/, '+7');
     }
 
-    let masked = "";
+    let masked = '';
 
     if (national.length > 0) {
         masked += ` ${national.slice(0, 2)}`;
@@ -74,9 +76,9 @@ const LeadForm = (props: LeadFormProps) => {
         tripDuration,
     } = props;
 
-    const [leadName, setLeadName] = useState<string>("");
-    const [leadPhone, setLeadPhone] = useState<string>("");
-    const [leadTg, setLeadTg] = useState<string>("");
+    const [leadName, setLeadName] = useState<string>('');
+    const [leadPhone, setLeadPhone] = useState<string>('');
+    const [leadTg, setLeadTg] = useState<string>('');
 
     // Автоподстановка Telegram username из WebApp (если открыто в Telegram)
     useEffect(() => {
@@ -93,14 +95,14 @@ const LeadForm = (props: LeadFormProps) => {
     }, []);
 
     const [sent, setSent] = useState<boolean>(false);
-    const [errorMsg, setErrorMsg] = useState<string>("");
+    const [errorMsg, setErrorMsg] = useState<string>('');
     const [sending, setSending] = useState<boolean>(false);
 
     const isGroupTrip = Boolean(tripTitle || tripDuration);
-    const groupLabel = tripTitle ?? tripDuration ?? "";
-    const leadTitle = isGroupTrip
-        ? `[Групповая] ${groupLabel}. ${leadName ? leadName : ""}`
-        : `[Индивидуальная] ${leadName ? leadName : ""}`;
+    const groupLabel = tripTitle ?? tripDuration ?? '';
+    const leadTitle = isGroupTrip ?
+        `[Групповая] ${groupLabel}. ${leadName ? leadName : ''}` :
+        `[Индивидуальная] ${leadName ? leadName : ''}`;
 
     const valueToEnumId = (
         dictionary: Record<string, string>,
@@ -111,12 +113,13 @@ const LeadForm = (props: LeadFormProps) => {
         }
 
         const entry = Object.entries(dictionary).find(([, label]) => label === value);
+
         return entry ? entry[0] : undefined;
     };
 
     const handleNameChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         const raw = event.target.value;
-        const lettersAndSpaces = raw.replace(/[^A-Za-zА-Яа-яЁё\s]/g, "");
+        const lettersAndSpaces = raw.replace(/[^A-Za-zА-Яа-яЁё\s]/g, '');
         setLeadName(lettersAndSpaces);
     }, []);
 
@@ -129,16 +132,16 @@ const LeadForm = (props: LeadFormProps) => {
             return;
         }
 
-        setErrorMsg("");
+        setErrorMsg('');
 
         if (!nameRegex.test(leadName)) {
-            setErrorMsg("Имя: буквы и пробелы, минимум 2 символа");
+            setErrorMsg('Имя: буквы и пробелы, минимум 2 символа');
 
             return;
         }
 
         if (!leadPhone) {
-            setErrorMsg("Заполните телефон");
+            setErrorMsg('Заполните телефон');
 
             return;
         }
@@ -151,8 +154,8 @@ const LeadForm = (props: LeadFormProps) => {
                 name: leadName,
                 phone: leadPhone,
                 telegram: leadTg,
-                source: "TELEGRAM",
-                type: isGroupTrip ? "GROUP" : "INDIVIDUAL",
+                source: 'TELEGRAM',
+                type: isGroupTrip ? 'GROUP' : 'INDIVIDUAL',
             };
 
             // Индивидуальные предпочтения (передаются, если есть)
@@ -178,7 +181,7 @@ const LeadForm = (props: LeadFormProps) => {
                 }
 
                 if (interests && interests.length > 0) {
-                    payload.it_interests = interests.join(", ");
+                    payload.it_interests = interests.join(', ');
                 }
             }
 
@@ -190,7 +193,7 @@ const LeadForm = (props: LeadFormProps) => {
                 setSent(false);
             }, SENT_BUTTON_RESET_DELAY);
         } catch {
-            setErrorMsg("Не удалось отправить. Попробуйте позже.");
+            setErrorMsg('Не удалось отправить. Попробуйте позже.');
         } finally {
             setSending(false);
         }
@@ -199,8 +202,8 @@ const LeadForm = (props: LeadFormProps) => {
         leadName,
         leadPhone,
         leadTg,
-        tripDuration,
-        tripTitle,
+        leadTitle,
+        isGroupTrip,
         duration,
         group,
         rate,
@@ -209,7 +212,10 @@ const LeadForm = (props: LeadFormProps) => {
     ]);
 
     return (
-        <div id="lead-form" className={`${cls}`}>
+        <div
+            id="lead-form"
+            className={`${cls}`}
+        >
             <input
                 type="text"
                 inputMode="text"
@@ -221,7 +227,7 @@ const LeadForm = (props: LeadFormProps) => {
                 autoCapitalize="words"
                 spellCheck={false}
                 onChange={handleNameChange}
-                required
+                required={true}
             />
 
             <input
@@ -233,18 +239,35 @@ const LeadForm = (props: LeadFormProps) => {
                 className={`${cls}__input`}
                 maxLength={20}
                 onChange={handlePhoneInput}
-                required
+                required={true}
             />
 
             {/* Telegram username подставляется автоматически из WebApp и не запрашивается у пользователя */}
 
-            {errorMsg && <div style={{ color: "#a6533f" }}>{errorMsg}</div>}
+            {errorMsg && <div style={{ color: '#a6533f' }}>{errorMsg}</div>}
 
-            <button className={`${cls}__submit`} onClick={handleSubmit}>
-                {sent ? "Все получили, уже изучаем!" : sending ? "Отправка…" : "Отправить"}
-            </button>
+            {(() => {
+                let submitText = 'Отправить';
+
+                if (sent) {
+                    submitText = 'Все получили, уже изучаем!';
+                } else if (sending) {
+                    submitText = 'Отправка…';
+                }
+
+                return (
+                    <button
+                        className={`${cls}__submit`}
+                        onClick={handleSubmit}
+                    >
+                        {submitText}
+                    </button>
+                );
+            })()}
         </div>
     );
 };
 
-export { LeadForm };
+export {
+    LeadForm,
+};

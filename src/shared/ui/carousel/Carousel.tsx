@@ -1,20 +1,22 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import "./carousel.less";
+import {
+    useCallback, useEffect, useMemo, useRef, useState,
+} from 'react';
+import './carousel.less';
 
 type CarouselProps = {
-    slides: Array<string | JSX.Element>;
+    slides: (string | JSX.Element)[];
     index?: number;
-    onChangeIndex?: (index: number) => void;
+    onChangeIndex?(index: number): void;
     loop?: boolean;
     hasMask?: boolean;
     autoplayInterval?: number | null;
     showControls?: boolean;
     className?: string;
     itemHeight?: number | string;
-    backgroundFit?: "cover" | "contain";
+    backgroundFit?: 'cover' | 'contain';
 };
 
-const baseClass = "carousel";
+const baseClass = 'carousel';
 
 export const Carousel = ({
     slides,
@@ -26,9 +28,9 @@ export const Carousel = ({
     showControls = true,
     className,
     itemHeight = 500,
-    backgroundFit = "contain",
+    backgroundFit = 'contain',
 }: CarouselProps) => {
-    const isControlled = typeof index === "number" && typeof onChangeIndex === "function";
+    const isControlled = typeof index === 'number' && typeof onChangeIndex === 'function';
     const [internalIndex, setInternalIndex] = useState(0);
     const activeIndex = isControlled ? (index as number) : internalIndex;
 
@@ -39,23 +41,33 @@ export const Carousel = ({
 
     useEffect(() => {
         const node = containerRef.current;
-        if (!node) return;
+
+        if (!node) {
+            return;
+        }
+
         const update = () => setSlideWidth(node.clientWidth);
         update();
         const ro = new ResizeObserver(update);
         ro.observe(node);
+
         return () => ro.disconnect();
     }, []);
 
     const goTo = useCallback(
         (next: number) => {
-            if (slidesCount === 0) return;
+            if (slidesCount === 0) {
+                return;
+            }
+
             let target = next;
+
             if (loop) {
                 target = (next + slidesCount) % slidesCount;
             } else {
                 target = Math.max(0, Math.min(next, slidesCount - 1));
             }
+
             if (isControlled) {
                 (onChangeIndex as (i: number) => void)(target);
             } else {
@@ -69,10 +81,14 @@ export const Carousel = ({
     const prev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
 
     useEffect(() => {
-        if (!autoplayInterval || slidesCount <= 1) return;
+        if (!autoplayInterval || slidesCount <= 1) {
+            return;
+        }
+
         const id = setInterval(() => {
             next();
         }, autoplayInterval);
+
         return () => clearInterval(id);
     }, [autoplayInterval, slidesCount, next]);
 
@@ -83,34 +99,48 @@ export const Carousel = ({
         startX.current = e.touches[0].clientX;
     };
     const onTouchEnd = (e: React.TouchEvent) => {
-        if (startX.current === null) return;
+        if (startX.current === null) {
+            return;
+        }
+
         const dx = e.changedTouches[0].clientX - startX.current;
-        if (dx > 50) prev();
-        if (dx < -50) next();
+
+        if (dx > 50) {
+            prev();
+        }
+
+        if (dx < -50) {
+            next();
+        }
+
         startX.current = null;
     };
 
     return (
         <div
-            className={[baseClass, className].filter(Boolean).join(" ")}
+            className={[baseClass, className].filter(Boolean).join(' ')}
             ref={containerRef}
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
         >
-            <div className={`${baseClass}__track`} style={{ transform }}>
+            <div
+                className={`${baseClass}__track`}
+                style={{ transform }}
+            >
                 {slides.map((slide, i) => {
-                    const isString = typeof slide === "string";
+                    const isString = typeof slide === 'string';
+
                     return (
                         <div
                             key={i}
                             className={`${baseClass}__item`}
                             style={{
                                 height:
-                                    typeof itemHeight === "number" ? `${itemHeight}px` : itemHeight,
+                                    typeof itemHeight === 'number' ? `${itemHeight}px` : itemHeight,
                                 backgroundImage: isString ? `url(${slide})` : undefined,
                                 backgroundSize: isString ? backgroundFit : undefined,
-                                backgroundRepeat: isString ? "no-repeat" : undefined,
-                                backgroundPosition: isString ? "center" : undefined,
+                                backgroundRepeat: isString ? 'no-repeat' : undefined,
+                                backgroundPosition: isString ? 'center' : undefined,
                             }}
                         >
                             {!isString ? slide : null}

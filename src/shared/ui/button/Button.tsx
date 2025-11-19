@@ -1,4 +1,4 @@
-import "./button.less";
+import './button.less';
 
 interface IButton {
     text: string;
@@ -6,7 +6,7 @@ interface IButton {
     active?: boolean;
 }
 
-const buttonClass = "button";
+const buttonClass = 'button';
 
 const Button = (props: IButton) => {
     const { text, callback, active = false } = props;
@@ -14,11 +14,13 @@ const Button = (props: IButton) => {
     return (
         <div
             onClick={callback}
-            className={`${buttonClass}${active ? ` ${buttonClass}--active` : ""}`}
+            className={`${buttonClass}${active ? ` ${buttonClass}--active` : ''}`}
         >
             {text}
         </div>
     );
 };
 
-export { Button };
+export {
+    Button,
+};

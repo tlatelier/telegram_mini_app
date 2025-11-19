@@ -1,29 +1,31 @@
-import { useEffect, useMemo, useState } from "react";
-import { OverlayCarousel } from "../../features/overlay/OverlayCarousel";
-import "./program-overlay.less";
-import { ProgramDaySection } from "./ProgramDaySection.tsx";
-import { ProgramExtraSection } from "./ProgramExtraSection.tsx";
+import {
+    useEffect, useMemo, useState,
+} from 'react';
+import { OverlayCarousel } from '../../features/overlay/OverlayCarousel';
+import './program-overlay.less';
+import { ProgramDaySection } from './ProgramDaySection.tsx';
+import { ProgramExtraSection } from './ProgramExtraSection.tsx';
 
-const blockClass = "programOverlay";
+const blockClass = 'programOverlay';
 
 export type ProgramOverlayDay = {
     title: string;
-    activities: (string | { strong?: string; text?: string })[];
+    activities: (string | { strong?: string, text?: string })[];
     photo?: string;
 };
 
 type ProgramOverlayProps = {
     days: ProgramOverlayDay[];
     active: number;
-    onClose: () => void;
-    onPrev: () => void;
-    onNext: () => void;
-    extras?: { title: string; items: string[] }[];
+    onClose(): void;
+    onPrev(): void;
+    onNext(): void;
+    extras?: { title: string, items: string[] }[];
     offer?: {
         benefits: string[];
         includes: string[];
         scarcity?: string;
-        quote?: { text: string; author?: string };
+        quote?: { text: string, author?: string };
         ctaPrimaryText?: string;
         ctaSecondaryText?: string;
     };
@@ -43,9 +45,9 @@ const ProgramOverlay = (props: ProgramOverlayProps) => {
 
     const images = useMemo(() => {
         // Финальный кадр — используем фото последнего (или первого) дня
-        const finalImage = days[days.length - 1]?.photo ?? days[0]?.photo ?? "";
+        const finalImage = days[days.length - 1]?.photo ?? days[0]?.photo ?? '';
 
-        return [...days.map((d) => d.photo ?? ""), finalImage];
+        return [...days.map((d) => d.photo ?? ''), finalImage];
     }, [days]);
 
     const isFinal = displayIndex === days.length;
@@ -84,8 +86,13 @@ const ProgramOverlay = (props: ProgramOverlayProps) => {
                 setDisplayIndex(days.length);
             } else if (i >= 0 && i < days.length) {
                 // Подымаем наверх для согласованности
-                if (i > displayIndex) onNext();
-                if (i < displayIndex) onPrev();
+                if (i > displayIndex) {
+                    onNext();
+                }
+
+                if (i < displayIndex) {
+                    onPrev();
+                }
             }
         }
     };
@@ -108,7 +115,11 @@ const ProgramOverlay = (props: ProgramOverlayProps) => {
                                 displayIndex={displayIndex}
                             />
                         ) : (
-                            <ProgramExtraSection onClose={onClose} parentClass={blockClass} sections={extras} offer={offer}
+                            <ProgramExtraSection
+                                onClose={onClose}
+                                parentClass={blockClass}
+                                sections={extras}
+                                offer={offer}
                             />
                         )}
                     </>
@@ -118,4 +129,6 @@ const ProgramOverlay = (props: ProgramOverlayProps) => {
     );
 };
 
-export { ProgramOverlay };
+export {
+    ProgramOverlay,
+};

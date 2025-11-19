@@ -1,4 +1,4 @@
-import { CRM_FIELDS } from "./crm";
+import { CRM_FIELDS } from './crm';
 
 export type CreateCommonPayload = {
     type?: string; // Тип поездки
@@ -36,7 +36,7 @@ function buildFormData(payload: CreateLeadPayload): URLSearchParams {
 
     if (payload.phone) {
         fields.set(`fields[${CRM_FIELDS.CD_PHONE}][0][VALUE]`, payload.phone);
-        fields.set(`fields[${CRM_FIELDS.CD_PHONE}][0][VALUE_TYPE]`, "MOBILE");
+        fields.set(`fields[${CRM_FIELDS.CD_PHONE}][0][VALUE_TYPE]`, 'MOBILE');
     }
 
     if (payload.telegram) {
@@ -49,7 +49,7 @@ function buildFormData(payload: CreateLeadPayload): URLSearchParams {
     }
 
     if (payload.source) {
-        fields.set(`fields[${CRM_FIELDS.COMMON_SOURCE}]`, "Telegram");
+        fields.set(`fields[${CRM_FIELDS.COMMON_SOURCE}]`, 'Telegram');
     }
 
     if (payload.price) {
@@ -78,10 +78,10 @@ function buildFormData(payload: CreateLeadPayload): URLSearchParams {
     }
 
     // Источник заявки в Bitrix24
-    fields.set(`fields[${CRM_FIELDS.COMMON_BITRIX_SOURCE}]`, "OTHER");
+    fields.set(`fields[${CRM_FIELDS.COMMON_BITRIX_SOURCE}]`, 'OTHER');
 
     // Сообщение в ленту о создании лида
-    fields.set("params[REGISTER_SONET_EVENT]", "Y");
+    fields.set('params[REGISTER_SONET_EVENT]', 'Y');
 
     return fields;
 }
@@ -93,8 +93,8 @@ const createLead = async (payload: CreateLeadPayload) => {
 
     try {
         const response = await fetch(webhookUrl, {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
             body,
         });
 
@@ -102,12 +102,13 @@ const createLead = async (payload: CreateLeadPayload) => {
             const text = await response.text();
 
             console.warn(`Bitrix24 error: ${response.status} ${text}`);
+
             return;
         }
 
         const data = await response.json().catch(() => ({}));
 
-        if (data && typeof data.result === "number") {
+        if (data && typeof data.result === 'number') {
             return {
                 id: data.result,
             };
@@ -119,4 +120,6 @@ const createLead = async (payload: CreateLeadPayload) => {
     return null;
 };
 
-export { createLead };
+export {
+    createLead,
+};
