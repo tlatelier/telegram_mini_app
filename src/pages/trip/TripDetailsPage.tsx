@@ -1,12 +1,14 @@
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
-    activeTripData, tripDetails, inactiveTripData,
-} from '../../entities/trip/model/index.ts';
-import { LeadForm } from '../../features/lead-form/LeadForm.tsx';
-import { FAQ } from '../../shared/ui/faq/FAQ.tsx';
-import { ProgramOverlay } from '../../widgets/program-overlay/ProgramOverlay.tsx';
-import { AutoCarousel } from '../../shared/ui/carousel/AutoCarousel.tsx';
+    tripDetails,
+    activeTripData,
+    inactiveTripData,
+} from '@entities/trip/model/index.ts';
+import { FAQ } from '@shared/ui/faq/FAQ.tsx';
+import { ProgramOverlay } from '@widgets/program-overlay/ProgramOverlay.tsx';
+import { AutoCarousel } from '@shared/ui/carousel/AutoCarousel.tsx';
+import { Bitrix24InlineForm } from '../../features/lead-form/Bitrix24InlineForm.tsx';
 
 import './trip-details.less';
 
@@ -40,6 +42,10 @@ const TripDetailsPage = () => {
     if (!trip) {
         return <div>Тур не найден</div>;
     }
+
+    const tripTitle = trip.title ?? trip.destination;
+    const tripDates = `${trip.dateStart ?? trip.date ?? ''}${trip.dateEnd ? ` — ${trip.dateEnd}` : ''}`;
+    const leadText = `Название проекта: ${tripTitle}\nДаты проекта: ${tripDates}`;
 
     return (
         <div className={cls}>
@@ -140,7 +146,17 @@ const TripDetailsPage = () => {
                 </div>
             )}
 
-            <LeadForm tripTitle={trip.title ?? trip.destination} />
+            <section
+                id="lead-form"
+                className={`${cls}__leadForm`}
+            >
+                <div className={`${cls}__leadTitle`}>Оставить заявку</div>
+                <Bitrix24InlineForm
+                    b24Form="inline/11/2vxwsb"
+                    loaderUrl="https://cdn-ru.bitrix24.ru/b34565224/crm/form/loader_11.js"
+                    preferencesText={leadText}
+                />
+            </section>
 
             {faqItems.length > 0 && <FAQ items={faqItems} />}
 
@@ -156,6 +172,8 @@ const TripDetailsPage = () => {
                                 (i - 1 + days.length) % days.length)
                     }
                     onNext={() => setOverlay((i) => (i === null ? 0 : (i + 1) % days.length))}
+                    tripTitle={tripTitle}
+                    tripDates={tripDates}
                     extras={details?.extras}
                     offer={details?.finalOffer}
                 />

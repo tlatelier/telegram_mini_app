@@ -1,5 +1,5 @@
 import type { ProgramOverlayDay } from './ProgramOverlay.tsx';
-import { Button } from '../../shared/ui/button/Button.tsx';
+import { Button } from '@shared/ui/button/Button.tsx';
 import { useCallback } from 'react';
 
 type ProgramDaySectionType = {

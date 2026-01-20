@@ -1,0 +1,72 @@
+.activeTripCard {
+    width: 100%;
+    padding: 12px;
+    overflow: hidden;
+    max-width: 750px;
+    min-height: 120px;
+    position: relative;
+    border-radius: 16px;
+    aspect-ratio: 16 / 9;
+    background-size: cover;
+    box-sizing: border-box;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    &::after {
+        inset: 0;
+        content: "";
+        position: absolute;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.8) 100%);
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        height: 100%;
+    }
+
+    &__meta {
+        row-gap: 4px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__badge {
+        align-self: flex-end;
+
+        padding: 6px 10px;
+        border-radius: 999px;
+        line-height: 1;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 700;
+
+        &--wip {
+            color: #1c1c1c;
+            background: rgba(250, 173, 20, 0.92);
+        }
+
+        &--upcoming {
+            background: rgba(38, 148, 92, 0.9);
+        }
+    }
+
+    &__date {
+        opacity: 0.95;
+        color: #ffffff;
+        font-size: 13px;
+
+        z-index: 1;
+    }
+
+    &__destination {
+        color: #ffffff;
+
+        font-size: 16px;
+        font-weight: 700;
+
+        z-index: 1;
+    }
+}

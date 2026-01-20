@@ -28,7 +28,8 @@ const getDestinationKeyByName = (inputName: string): DestinationKey | null => {
 };
 
 export {
-    DESTINATIONS, getDestinationKeyByName,
+    DESTINATIONS,
+    getDestinationKeyByName,
 };
 export type {
     DestinationKey,

@@ -1,11 +1,12 @@
+import { App } from './App.tsx';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { App } from './App.tsx';
 import { StartPage } from './pages/start/StartPage';
-import { PrivateTripsPage } from './pages/private/PrivateTripsPage';
 import { GalleryPage } from './pages/gallery/GalleryPage';
 import { TripDetailsPage } from './pages/trip/TripDetailsPage';
+import { PrivateTripsPage } from './pages/private/PrivateTripsPage';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 import './app/styles/normalize.less';
 import './app/styles/typography.less';
 

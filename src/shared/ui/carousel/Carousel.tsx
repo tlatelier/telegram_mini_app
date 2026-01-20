@@ -4,7 +4,7 @@ import {
 import './carousel.less';
 
 type CarouselProps = {
-    slides: (string | JSX.Element)[];
+    slides: (string | React.ReactNode)[];
     index?: number;
     onChangeIndex?(index: number): void;
     loop?: boolean;

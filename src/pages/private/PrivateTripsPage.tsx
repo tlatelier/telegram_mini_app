@@ -1,34 +1,28 @@
 import { useMemo, useState } from 'react';
-import { Button } from '../../shared/ui/button/Button';
-import { FAQ } from '../../shared/ui/faq/FAQ.tsx';
-import { LeadForm } from '../../features/lead-form/LeadForm.tsx';
-import { CaseOverlay } from '../../widgets/case-overlay/CaseOverlay';
+import { Button } from '@shared/ui/button/Button';
+import { FAQ } from '@shared/ui/faq/FAQ.tsx';
+import { CaseOverlay } from '@widgets/case-overlay/CaseOverlay';
+import { Bitrix24InlineForm } from '../../features/lead-form/Bitrix24InlineForm.tsx';
+import { TripPreferencesSection, type TripPreferencesValue } from './TripPreferencesSection.tsx';
 import './private-trips.less';
 
 const cls = 'privateTrips';
 
-type ChipValue = string;
-
 type CaseDay = {
     title: string;
-    description?: string;
     photo?: string;
+    description?: string;
 };
 
 type CaseCard = {
     id: string;
-    title: string;
-    meta: string;
     img: string;
-    highlights: string[];
+    meta: string;
+    title: string;
     days: CaseDay[];
+    highlights: string[];
 };
 
-const DURATION: ChipValue[] = ['3–5 дней', '6–9 дней', '10–14 дней'];
-const GROUP: ChipValue[] = ['Соло', 'Пара', 'Семья', 'Компания'];
-const RATE: ChipValue[] = ['Спокойный', 'Сбалансированный', 'Активный'];
-const INTERESTS: ChipValue[] = ['Гастрономия', 'Природа', 'Архитектура', 'Арт', 'Вино', 'Концерты'];
-const BUDGET: ChipValue[] = ['до 3000$', '3000-7000$', 'более 7000$'];
 const CASES: CaseCard[] = [
     {
         id: 'c1',
@@ -206,20 +200,13 @@ const FAQ_ITEMS: { q: string, a: string }[] = [
 ];
 
 const PrivateTripsPage = () => {
-    const [duration, setDuration] = useState<ChipValue | null>(null);
-    const [group, setGroup] = useState<ChipValue | null>(null);
-    const [rate, setRate] = useState<ChipValue | null>(null);
-    const [interests, setInterests] = useState<ChipValue[]>([]);
-    const [budget, setBudget] = useState<ChipValue | null>(null);
+    const [prefs, setPrefs] = useState<TripPreferencesValue | null>(null);
 
-    const toggleInterest = (value: ChipValue) => {
-        setInterests((prev) =>
-            prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]);
-    };
-
-    const summary = useMemo(() => {
-        return [duration, group, rate, interests.join(', '), budget].filter(Boolean).join(' · ');
-    }, [duration, group, rate, interests, budget]);
+    const prefsLeadText = useMemo(() => {
+        // Пустое значение не отправляем (чтобы не засорять поле в CRM).
+        const text = prefs?.leadText?.trim() ?? '';
+        return text.length ? text : undefined;
+    }, [prefs?.leadText]);
 
     const scrollToForm = () => {
         document.getElementById('lead-form')?.scrollIntoView({
@@ -235,9 +222,8 @@ const PrivateTripsPage = () => {
         });
     };
 
-    const [selectedCaseIndex, setSelectedCaseIndex] = useState<number | null>(null);
-
     const [activeDay, setActiveDay] = useState<number>(0);
+    const [selectedCaseIndex, setSelectedCaseIndex] = useState<number | null>(null);
 
     const openCase = (idx: number) => {
         setSelectedCaseIndex(idx);
@@ -271,6 +257,7 @@ const PrivateTripsPage = () => {
         <div className={cls}>
             <section className={`${cls}__hero`}>
                 <h1 className={`${cls}__heroTitle`}>Частные путешествия под вас</h1>
+
                 <div className={`${cls}__heroSub`}>
                     Продуманный маршрут · Персонализация поездки · Проверенные гиды и партнеры ·
                     Поддержка 24/7
@@ -302,90 +289,10 @@ const PrivateTripsPage = () => {
                 </div>
             </section>
 
-            <section
-                id="prefs"
-                className={`${cls}__prefs`}
-            >
-                <h2 className={`${cls}__sectionTitle`}>Ваши предпочтения</h2>
-                <div className={`${cls}__prefsGroup`}>
-                    <div className={`${cls}__prefsLabel`}>Длительность</div>
-                    <div className={`${cls}__chips`}>
-                        {DURATION.map((v) => (
-                            <button
-                                key={v}
-                                className={`${cls}__chip${duration === v ? ` ${cls}__chip--active` : ''}`}
-                                onClick={() => setDuration(duration === v ? null : v)}
-                            >
-                                {v}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-                <div className={`${cls}__prefsGroup`}>
-                    <div className={`${cls}__prefsLabel`}>Состав</div>
-                    <div className={`${cls}__chips`}>
-                        {GROUP.map((v) => (
-                            <button
-                                key={v}
-                                className={`${cls}__chip${group === v ? ` ${cls}__chip--active` : ''}`}
-                                onClick={() => setGroup(group === v ? null : v)}
-                            >
-                                {v}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-                <div className={`${cls}__prefsGroup`}>
-                    <div className={`${cls}__prefsLabel`}>Темп поездки</div>
-                    <div className={`${cls}__chips`}>
-                        {RATE.map((v) => (
-                            <button
-                                key={v}
-                                className={`${cls}__chip${rate === v ? ` ${cls}__chip--active` : ''}`}
-                                onClick={() => setRate(rate === v ? null : v)}
-                            >
-                                {v}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-                <div className={`${cls}__prefsGroup`}>
-                    <div className={`${cls}__prefsLabel`}>Интересы</div>
-                    <div className={`${cls}__chips`}>
-                        {INTERESTS.map((v) => (
-                            <button
-                                key={v}
-                                className={`${cls}__chip${interests.includes(v) ? ` ${cls}__chip--active` : ''}`}
-                                onClick={() => toggleInterest(v)}
-                            >
-                                {v}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-                <div className={`${cls}__prefsGroup`}>
-                    <div className={`${cls}__prefsLabel`}>Бюджет поездки</div>
-                    <div className={`${cls}__chips`}>
-                        {BUDGET.map((v) => (
-                            <button
-                                key={v}
-                                className={`${cls}__chip${budget === v ? ` ${cls}__chip--active` : ''}`}
-                                onClick={() => setBudget(budget === v ? null : v)}
-                            >
-                                {v}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-                {summary && <div className={`${cls}__prefsSummary`}>{summary}</div>}
-                <div className={`${cls}__prefsCta`}>
-                    <Button
-                        text="Сформировать предложение"
-                        callback={scrollToForm}
-                        active={true}
-                    />
-                </div>
-            </section>
+            <TripPreferencesSection
+                onCta={scrollToForm}
+                onChange={setPrefs}
+            />
 
             <section className={`${cls}__cases`}>
                 <h2 className={`${cls}__sectionTitle`}>Примеры работ</h2>
@@ -419,13 +326,13 @@ const PrivateTripsPage = () => {
 
             {selectedCaseIndex !== null && (
                 <CaseOverlay
-                    title={CASES[selectedCaseIndex].title}
-                    meta={CASES[selectedCaseIndex].meta}
-                    days={CASES[selectedCaseIndex].days}
-                    active={activeDay}
                     onPrev={prevDay}
                     onNext={nextDay}
+                    active={activeDay}
                     onClose={closeCase}
+                    meta={CASES[selectedCaseIndex].meta}
+                    days={CASES[selectedCaseIndex].days}
+                    title={CASES[selectedCaseIndex].title}
                 />
             )}
 
@@ -465,14 +372,15 @@ const PrivateTripsPage = () => {
                 </div>
             </section>
 
-            <section className={`${cls}__form`}>
+            <section
+                id="lead-form"
+                className={`${cls}__form`}
+            >
                 <h2 className={`${cls}__sectionTitle`}>Оставить заявку</h2>
-                <LeadForm
-                    duration={duration}
-                    group={group}
-                    rate={rate}
-                    interests={interests}
-                    budget={budget}
+                <Bitrix24InlineForm
+                    b24Form="inline/9/k3ksjn"
+                    loaderUrl="https://cdn-ru.bitrix24.ru/b34565224/crm/form/loader_9.js"
+                    preferencesText={prefsLeadText}
                 />
             </section>
 
@@ -504,10 +412,10 @@ const PrivateTripsPage = () => {
                             className={`${cls}__inspItem`}
                         >
                             <img
-                                className={`${cls}__inspImg`}
                                 src={src}
-                                alt="inspiration"
                                 loading="lazy"
+                                alt="inspiration"
+                                className={`${cls}__inspImg`}
                             />
                         </div>
                     ))}
@@ -519,16 +427,6 @@ const PrivateTripsPage = () => {
                 <FAQ items={FAQ_ITEMS} />
             </section>
 
-            <section className={`${cls}__form`}>
-                <h2 className={`${cls}__sectionTitle`}>Оставить заявку</h2>
-                <LeadForm
-                    duration={duration}
-                    group={group}
-                    rate={rate}
-                    interests={interests}
-                    budget={budget}
-                />
-            </section>
         </div>
     );
 };

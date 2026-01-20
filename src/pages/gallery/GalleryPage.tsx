@@ -2,8 +2,8 @@ import {
     useEffect, useMemo, useState,
 } from 'react';
 import { useLocation } from 'react-router-dom';
-import { DESTINATIONS } from '../../shared/lib/destinations.ts';
-import type { DestinationKey } from '../../shared/lib/destinations.ts';
+import { DESTINATIONS } from '@shared/lib/destinations.ts';
+import type { DestinationKey } from '@shared/lib/destinations.ts';
 import './gallery.less';
 
 const BASE_URL: string = (import.meta as any)?.env?.BASE_URL ?? '/';

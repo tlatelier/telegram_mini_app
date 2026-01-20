@@ -1,6 +1,5 @@
-import type { ReactNode } from 'react';
 import { useRef } from 'react';
-import { Carousel } from '../../shared/ui/carousel/Carousel';
+import { Carousel } from '@shared/ui/carousel/Carousel';
 import './overlay.less';
 
 const baseClass = 'overlay';
@@ -11,9 +10,9 @@ type OverlayCarouselProps = {
     onChange(index: number): void;
     onPrev(): void;
     onNext(): void;
-    renderContent?(activeIndex: number): ReactNode;
     onLastNext?(): void;
     hideArrowsOnLast?: boolean;
+    renderContent?(activeIndex: number): React.ReactNode;
 };
 
 export const OverlayCarousel = ({

@@ -1,8 +1,8 @@
 import type { TripDataType, TripDetailsType } from '../../type.h';
+import { TripStatus } from "../../type.h";
 
 const inactiveTripDataMurmanskPrev: TripDataType = {
     id: 'murmansk-mar-1',
-    isActive: false,
     date: '6 марта',
     background: '/images/trips/previous/murmansk_1/promo/promo1.webp',
     destination: 'Мурманск',
@@ -20,7 +20,7 @@ const inactiveTripDataMurmanskPrev: TripDataType = {
     priceFrom: 74000,
     currency: 'RUB',
     locationsCount: 11,
-    status: 'past',
+    status: TripStatus.Past,
 };
 
 const tripDetailsMurmanskPrev: TripDetailsType = {

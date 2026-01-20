@@ -1,9 +1,11 @@
-import { Button } from '../../shared/ui/button/Button.tsx';
+import { Button } from '@shared/ui/button/Button.tsx';
 import { useCallback } from 'react';
 
 type ProgramExtraSectionType = {
     onClose(): void;
     parentClass: string;
+    tripTitle?: string;
+    tripDates?: string;
     sections?: { title: string, items: string[] }[];
     offer?: {
         benefits: string[];
@@ -13,13 +15,12 @@ type ProgramExtraSectionType = {
         ctaPrimaryText?: string;
         ctaSecondaryText?: string;
     };
-    onBackToStart?(): void;
 };
 
 const LEAD_FORM_ID = 'lead-form';
 
 const ProgramExtraSection = (props: ProgramExtraSectionType) => {
-    const { onClose, parentClass, sections, offer, onBackToStart } = props;
+    const { onClose, parentClass, sections, offer, tripTitle, tripDates } = props;
 
     const onScreenClose = useCallback(() => {
         onClose?.();
@@ -33,6 +34,15 @@ const ProgramExtraSection = (props: ProgramExtraSectionType) => {
         <>
             <div className={`${parentClass}__finalMask`} />
             <div className={`${parentClass}__final`}>
+                <div className={`${parentClass}__finalMeta`}>
+                    <div className={`${parentClass}__meta`}>
+                        {tripTitle ?? 'Программа'}
+                    </div>
+                    {tripDates ? (
+                        <div className={`${parentClass}__finalSub`}>{tripDates}</div>
+                    ) : null}
+                </div>
+
                 {/* Режим №1: структурные секции */}
                 {sections?.length && !offer && (
                     <>
@@ -91,20 +101,14 @@ const ProgramExtraSection = (props: ProgramExtraSectionType) => {
             <div className={`${parentClass}__actions`}>
                 <div className={`${parentClass}__btn ${parentClass}__btn--secondary`}>
                     <Button
-                        text={offer?.ctaSecondaryText ?? 'Закрыть'}
+                        text="Закрыть"
                         callback={onClose}
                     />
                 </div>
                 <div className={`${parentClass}__btn ${parentClass}__btn--primary`}>
                     <Button
-                        text={offer?.ctaPrimaryText ?? 'Хочу поехать!'}
+                        text="Хочу поехать!"
                         callback={onScreenClose}
-                    />
-                </div>
-                <div className={`${parentClass}__btn ${parentClass}__btn--secondary ${parentClass}__btn--wide`}>
-                    <Button
-                        text="К началу программы"
-                        callback={onBackToStart}
                     />
                 </div>
             </div>

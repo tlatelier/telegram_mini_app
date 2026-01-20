@@ -1,59 +1,59 @@
-import { bem } from '../../../shared/lib/utils/bem.ts';
 import {
-    activeTripData,
-    inactiveTripData,
-} from '../model';
+    Fragment,
+    useState,
+    useCallback,
+} from 'react';
+import { bem } from '@shared/lib/utils/bem.ts';
 import { ActiveTripCard } from './ActiveTripCard.tsx';
 import { InactiveTripCard } from './InactiveTripCard.tsx';
+import { selectAllActiveTrips, selectAllInactiveTrips } from '@entities/trip/model/selectors.ts';
 
-import './trip.less';
+import './styles/tripCardList.less';
 
 const tripCardListClass = 'tripSection';
 
-type TripCardListProps = {
-    onOpenTrip?(id: string): void;
-};
+const activeTrips = selectAllActiveTrips();
+const inactiveTrips = selectAllInactiveTrips();
 
-const TripCardList = ({ onOpenTrip }: TripCardListProps) => {
+const TripCardList = () => {
+    const [inactiveOpenTripId, setInactiveOpenTripId] = useState<string | null>(null);
+
+    const showInactiveTripOffer = useCallback((id: string) => {
+        setInactiveOpenTripId(inactiveOpenTripId !== id ? id : null);
+    }, [inactiveOpenTripId]);
+
     return (
-        <>
+        <Fragment>
             <section className={tripCardListClass}>
                 <h3 className={bem(tripCardListClass, 'title')}>Путешествия впереди</h3>
                 <div className={bem(tripCardListClass, 'cards')}>
-                    {activeTripData.map(
-                        ({ id, date, background, destination, status, isActive }) => (
+                    {activeTrips.map(({ id, ...props }) => (
                             <ActiveTripCard
-                                key={id}
                                 id={id}
-                                date={date}
-                                status={status}
-                                isActive={isActive}
-                                background={background}
-                                destination={destination}
-                                onClick={() => onOpenTrip?.(id)}
+                                key={id}
+                                {...props}
                             />
                         ),
                     )}
                 </div>
             </section>
 
-            <section className="tripSection">
-                <h3 className="tripSection__title">Путешествия позади</h3>
+            <section className={tripCardListClass}>
+                <h3 className={bem(tripCardListClass, 'title')}>Путешествия в прошлом</h3>
                 <div className={bem(tripCardListClass, 'cards')}>
-                    {inactiveTripData.map(
-                        ({ id, date, background, destination }) => (
+                    {inactiveTrips.map(({ id, ...props }) => (
                             <InactiveTripCard
                                 id={id}
                                 key={id}
-                                date={date}
-                                background={background}
-                                destination={destination}
+                                {...props}
+                                canShowInactiveTripOffer={inactiveOpenTripId === id}
+                                showInactiveTripOffer={() => showInactiveTripOffer(id)}
                             />
                         ),
                     )}
                 </div>
             </section>
-        </>
+        </Fragment>
     );
 };
 

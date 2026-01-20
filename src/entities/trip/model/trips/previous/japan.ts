@@ -1,8 +1,8 @@
 import type { TripDataType, TripDetailsType } from '../../type.h';
+import { TripStatus } from "../../type.h";
 
 const inactiveTripDataJapan: TripDataType = {
     id: 'japan-nov-1',
-    isActive: false,
     date: '3 ноября',
     background: '/images/trips/previous/japan_1/promo/promo1.webp',
     destination: 'Япония',
@@ -20,7 +20,7 @@ const inactiveTripDataJapan: TripDataType = {
     priceFrom: 3620,
     currency: 'USD',
     locationsCount: 17,
-    status: 'past',
+    status: TripStatus.Past,
 };
 
 const tripDetailsJapan: TripDetailsType = {

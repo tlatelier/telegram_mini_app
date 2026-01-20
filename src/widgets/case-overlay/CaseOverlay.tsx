@@ -1,6 +1,7 @@
-import { Button } from '../../shared/ui/button/Button';
+import { Button } from '@shared/ui/button/Button';
 import { OverlayCarousel } from '../../features/overlay/OverlayCarousel';
 import './case-overlay.less';
+import { Fragment } from "react";
 
 const cls = 'caseOverlay';
 
@@ -16,7 +17,7 @@ type CaseOverlayProps = {
     onClose(): void;
 };
 
-export const CaseOverlay = ({
+const CaseOverlay = ({
     title,
     meta,
     days,
@@ -36,19 +37,20 @@ export const CaseOverlay = ({
                 onPrev={onPrev}
                 onNext={onNext}
                 renderContent={() => (
-                    <>
+                    <Fragment>
                         <div className={`${cls}__metaTop`}>
                             <div className={`${cls}__title`}>{title}</div>
                             {meta && <div className={`${cls}__meta`}>{meta}</div>}
                         </div>
                         <div className={`${cls}__content`}>
                             <div className={`${cls}__mask`} />
-                            <div
-                                className={`${cls}__meta`}
-                            >{current?.title}
+                            <div className={`${cls}__meta`}>
+                                {current?.title}
                             </div>
                             {current?.description && (
-                                <div className={`${cls}__text`}>{current.description}</div>
+                                <div className={`${cls}__text`}>
+                                    {current.description}
+                                </div>
                             )}
                         </div>
                         <div className={`${cls}__actions`}>
@@ -70,9 +72,13 @@ export const CaseOverlay = ({
                                 />
                             </div>
                         </div>
-                    </>
+                    </Fragment>
                 )}
             />
         </div>
     );
+};
+
+export {
+    CaseOverlay,
 };

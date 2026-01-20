@@ -1,8 +1,8 @@
 import type { TripDataType, TripDetailsType } from '../../type.h';
+import { TripStatus } from "../../type.h";
 
 const inactiveTripDataUar: TripDataType = {
     id: 'uar-mar-1',
-    isActive: false,
     date: '11 марта',
     background: '/images/trips/previous/uar_1/promo/promo1.webp',
     destination: 'Кейптаун',
@@ -20,7 +20,7 @@ const inactiveTripDataUar: TripDataType = {
     priceFrom: 3670,
     currency: 'USD',
     locationsCount: 18,
-    status: 'past',
+    status: TripStatus.Past,
 };
 
 const tripDetailsUar: TripDetailsType = {

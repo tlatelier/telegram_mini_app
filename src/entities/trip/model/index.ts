@@ -1,22 +1,54 @@
 import type { TripDataType, TripDetailsType } from './type.h';
 
-import { activeTripDataArgentina, tripDetailsArgentina } from './trips/active/argentina';
-import { activeTripDataBaikal, tripDetailsBaikal } from './trips/active/baikal';
 import {
-    activeTripDataMurmanskActive,
+    tripDetailsBaikal,
+    activeTripDataBaikal,
+} from './trips/active/baikal';
+import {
     tripDetailsMurmanskActive,
+    activeTripDataMurmanskActive,
 } from './trips/active/murmansk';
-
-import { inactiveTripDataKamchatka, tripDetailsKamchatka } from './trips/previous/kamchatka';
 import {
-    inactiveTripDataMurmanskPrev,
-    tripDetailsMurmanskPrev,
-} from './trips/previous/murmansk';
-import { inactiveTripDataAltai, tripDetailsAltai } from './trips/previous/altai';
-import { inactiveTripDataJapan, tripDetailsJapan } from './trips/previous/japan';
-import { inactiveTripDataUar, tripDetailsUar } from './trips/previous/uar';
+    tripDetailsQatarWinter,
+    activeTripDataQatarWinter,
+} from './trips/active/qatar';
+import {
+    tripDetailsSouthAfrica,
+    activeTripDataSouthAfrica,
+} from './trips/active/south-africa';
+import {
+    tripDetailsUzbekistan,
+    activeTripDataUzbekistan,
+} from './trips/active/uzbekistan';
 
-const activeTripData: TripDataType[] = [activeTripDataArgentina, activeTripDataBaikal, activeTripDataMurmanskActive];
+import {
+    tripDetailsKamchatka,
+    inactiveTripDataKamchatka,
+} from './trips/previous/kamchatka';
+import {
+    tripDetailsMurmanskPrev,
+    inactiveTripDataMurmanskPrev,
+} from './trips/previous/murmansk';
+import {
+    tripDetailsAltai,
+    inactiveTripDataAltai,
+} from './trips/previous/altai';
+import {
+    tripDetailsJapan,
+    inactiveTripDataJapan,
+} from './trips/previous/japan';
+import {
+    tripDetailsUar,
+    inactiveTripDataUar,
+} from './trips/previous/uar';
+
+const activeTripData: TripDataType[] = [
+    activeTripDataSouthAfrica,
+    activeTripDataBaikal,
+    activeTripDataMurmanskActive,
+    activeTripDataQatarWinter,
+    activeTripDataUzbekistan,
+];
 
 const inactiveTripData: TripDataType[] = [
     inactiveTripDataKamchatka,
@@ -27,9 +59,11 @@ const inactiveTripData: TripDataType[] = [
 ];
 
 const tripDetails: TripDetailsType[] = [
-    tripDetailsArgentina,
+    tripDetailsSouthAfrica,
     tripDetailsBaikal,
     tripDetailsMurmanskActive,
+    tripDetailsQatarWinter,
+    tripDetailsUzbekistan,
     tripDetailsKamchatka,
     tripDetailsMurmanskPrev,
     tripDetailsAltai,
@@ -38,5 +72,7 @@ const tripDetails: TripDetailsType[] = [
 ];
 
 export {
-    activeTripData, inactiveTripData, tripDetails,
+    tripDetails,
+    activeTripData,
+    inactiveTripData,
 };

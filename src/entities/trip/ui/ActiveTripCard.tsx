@@ -1,8 +1,12 @@
-import { useMemo } from 'react';
-import type { TripDataType } from '../model/type.h';
-import { bem } from '../../../shared/lib/utils/bem.ts';
+import { useCallback, useMemo } from 'react';
+import { bem } from '@shared/lib/utils/bem.ts';
+import { useNavigate } from 'react-router-dom';
+import type { TripDataType } from '@entities/trip/model/type.h';
+import { TripStatus } from '@entities/trip/model/type.h';
 
-const tripCardClass = 'tripCard';
+import './styles/activeTripCard.less';
+
+const componentClass = 'activeTripCard';
 
 type TripCardProps = TripDataType & {
     onClick?(): void;
@@ -10,58 +14,42 @@ type TripCardProps = TripDataType & {
 
 const ActiveTripCard = (props: TripCardProps) => {
     const {
+        id,
         date,
-        onClick,
-        isActive,
+        status,
         background,
         destination,
-        status: statusProp,
     } = props;
 
-    const statusKey = statusProp ?? (isActive ? 'upcoming' : 'past');
+    const navigate = useNavigate();
 
-    const status = useMemo(() => {
-        let mod = 'wip';
-        let text = 'В проработке';
+    const handleOpenTrip = useCallback(() => {
+        navigate(`/trip/${id}`);
+    }, [navigate]);
 
-        switch (statusKey) {
-            case 'upcoming':
-                mod = 'upcoming';
-                text = 'Идёт набор';
-                break;
-
-            case 'past':
-                mod = 'past';
-                text = 'В воспоминаниях';
-                break;
+    const { mod, text } = useMemo(() => {
+        if (status === TripStatus.Upcoming) {
+            return { mod: 'upcoming', text: 'Идёт набор' };
         }
 
-        return { mod, text };
-    }, [statusKey]);
-
-    const cardClassName = `${tripCardClass} ${tripCardClass}--${status.mod}`;
+        return { mod: 'wip', text: 'В проработке' };
+    }, [status]);
 
     return (
         <div
-            tabIndex={0}
-            role="button"
-            onClick={onClick}
-            className={cardClassName}
+            onClick={handleOpenTrip}
+            className={componentClass}
             style={{ backgroundImage: `url(${background})` }}
-            onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    onClick?.();
-                }
-            }}
         >
-            <span
-                className={`${tripCardClass}__badge ${tripCardClass}__badge--${status.mod}`}
-                aria-label={status.text}
-            >
-                {status.text}
-            </span>
-            <span className={bem(tripCardClass, 'destination')}>{destination}</span>
-            <span className={bem(tripCardClass, 'date')}>{date}</span>
+            <div className={bem(componentClass, 'info')}>
+                <span className={`${componentClass}__badge ${componentClass}__badge--${mod}`}>
+                    {text}
+                </span>
+                <div className={bem(componentClass, 'meta')}>
+                    <span className={bem(componentClass, 'date')}>{date}</span>
+                    <span className={bem(componentClass, 'destination')}>{destination}</span>
+                </div>
+            </div>
         </div>
     );
 };

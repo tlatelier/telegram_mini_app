@@ -1,8 +1,8 @@
 import type { TripDataType, TripDetailsType } from '../../type.h';
+import { TripStatus } from "../../type.h";
 
 const inactiveTripDataAltai: TripDataType = {
     id: 'altai-jan-1',
-    isActive: false,
     date: '3 января',
     background: '/images/trips/previous/altai_1/promo/promo1.webp',
     destination: 'Алтай',
@@ -20,7 +20,7 @@ const inactiveTripDataAltai: TripDataType = {
     priceFrom: 180000,
     currency: 'RUB',
     locationsCount: 16,
-    status: 'past',
+    status: TripStatus.Past,
 };
 
 const tripDetailsAltai: TripDetailsType = {

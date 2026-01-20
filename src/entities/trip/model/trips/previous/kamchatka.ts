@@ -1,8 +1,8 @@
 import type { TripDataType, TripDetailsType } from '../../type.h';
+import { TripStatus } from "../../type.h";
 
 const inactiveTripDataKamchatka: TripDataType = {
     id: 'kamchatka-aug-1',
-    isActive: false,
     date: '16 августа',
     background: '/images/trips/previous/kamchatka_1/promo/promo1.webp',
     destination: 'Камчатка',
@@ -20,7 +20,7 @@ const inactiveTripDataKamchatka: TripDataType = {
     priceFrom: 220000,
     currency: 'RUB',
     locationsCount: 22,
-    status: 'past',
+    status: TripStatus.Past,
 };
 
 const tripDetailsKamchatka: TripDetailsType = {

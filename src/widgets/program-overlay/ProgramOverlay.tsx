@@ -20,6 +20,8 @@ type ProgramOverlayProps = {
     onClose(): void;
     onPrev(): void;
     onNext(): void;
+    tripTitle?: string;
+    tripDates?: string;
     extras?: { title: string, items: string[] }[];
     offer?: {
         benefits: string[];
@@ -32,7 +34,7 @@ type ProgramOverlayProps = {
 };
 
 const ProgramOverlay = (props: ProgramOverlayProps) => {
-    const { days, active, onPrev, onNext, onClose, extras, offer } = props;
+    const { days, active, onPrev, onNext, onClose, extras, offer, tripTitle, tripDates } = props;
 
     const [displayIndex, setDisplayIndex] = useState<number>(active);
 
@@ -118,6 +120,8 @@ const ProgramOverlay = (props: ProgramOverlayProps) => {
                             <ProgramExtraSection
                                 onClose={onClose}
                                 parentClass={blockClass}
+                                tripTitle={tripTitle}
+                                tripDates={tripDates}
                                 sections={extras}
                                 offer={offer}
                             />

@@ -1,12 +1,20 @@
 import type { ReactNode } from 'react';
+
+const TripStatus = {
+    Wip: 'wip',
+    Past: 'past',
+    Upcoming: 'upcoming',
+} as const;
+
+type TripStatus = (typeof TripStatus)[keyof typeof TripStatus];
+
 type TripId = string;
 
 type TripDataType = {
-    id: TripId;
+    id: string;
     date: string;
     background: string;
     destination: string;
-    isActive?: boolean;
     title?: string;
     dateStart?: string;
     dateEnd?: string;
@@ -14,8 +22,7 @@ type TripDataType = {
     priceFrom?: number;
     currency?: string;
     locationsCount?: number;
-    // Отображение статуса на карточке: по умолчанию вычисляется по isActive
-    status?: 'upcoming' | 'wip' | 'past';
+    status?: TripStatus;
     duration?: string;
 };
 
@@ -66,9 +73,14 @@ type TripDetailsType = {
     finalOffer?: TripFinalOfferType;
 };
 
+export {
+    TripStatus,
+};
+
 export type {
     TripId,
     TripDataType,
+    TripFAQItemType,
     TripDayItemType,
     TripDetailsType,
     TripActivityItem,

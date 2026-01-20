@@ -6,8 +6,8 @@ import {
 } from 'react-router-dom';
 import {
     NAV_ITEMS, NAV_SECTIONS, type NavigationSectionType,
-} from '../../shared/types/navigation';
-import { Button } from '../../shared/ui/button/Button';
+} from '@shared/types/navigation';
+import { Button } from '@shared/ui/button/Button';
 import './layout.less';
 
 const layoutClass = 'layout';

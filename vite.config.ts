@@ -13,8 +13,8 @@ export default defineConfig(() => {
             alias: {
                 '@entities': '/src/entities',
                 '@pages': '/src/pages',
+                '@shared': '/src/shared',
                 '@widgets': '/src/widgets',
-                '@features': '/src/features',
             },
         },
     };
