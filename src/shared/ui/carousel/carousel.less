@@ -7,6 +7,7 @@
     &__track {
         display: flex;
         transition: transform 300ms ease;
+        -webkit-transition: -webkit-transform 300ms ease;
         will-change: transform;
     }
 
@@ -20,6 +21,7 @@
         left: 12px;
         right: 12px;
         transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
         display: flex;
         justify-content: space-between;
         pointer-events: none;
@@ -50,15 +52,20 @@
 
     &__nav--left::before {
         transform: translate(-25%, -50%) rotate(45deg);
+        -webkit-transform: translate(-25%, -50%) rotate(45deg);
     }
 
     &__nav--right::before {
         transform: translate(-75%, -50%) rotate(-135deg);
+        -webkit-transform: translate(-75%, -50%) rotate(-135deg);
     }
 
     &__mask {
         position: absolute;
-        inset: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         background: linear-gradient(0deg, rgba(0, 0, 0, 1) 5%, rgba(0, 0, 0, 0) 40%);
     }
 }

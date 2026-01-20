@@ -8,10 +8,13 @@
 
     position: relative;
 
-    min-height: var(--viewport-height, 100vh);
-    padding-bottom: var(--tg-safe-area-inset-bottom);
+    min-height: 100vh; /* Fallback for Safari */
+    min-height: 100dvh;
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--tg-safe-area-inset-bottom, 0px));
     padding-top: calc(
-        var(--tg-content-safe-area-inset-top, 0px) + var(--tg-safe-area-inset-top, 0px)
+        env(safe-area-inset-top, 0px) +
+        var(--tg-content-safe-area-inset-top, 0px) +
+        var(--tg-safe-area-inset-top, 0px)
     );
 
     z-index: 999999;
@@ -19,10 +22,13 @@
     &::before {
         content: "";
         top: 0;
+        left: 0;
         width: 100%;
         position: fixed;
         height: calc(
-            var(--tg-content-safe-area-inset-top, 0px) + var(--tg-safe-area-inset-top, 0px)
+            env(safe-area-inset-top, 0px) +
+            var(--tg-content-safe-area-inset-top, 0px) +
+            var(--tg-safe-area-inset-top, 0px)
         );
         background: rgba(0, 0, 0, 0.9);
         z-index: 999999;
@@ -31,20 +37,22 @@
     &__main {
         flex: 1 1 auto;
         /* Reserve space for bottom nav so content is not overlapped */
-        padding-bottom: 102px;
+        padding-bottom: calc(102px + env(safe-area-inset-bottom, 0px));
     }
 
     &__nav {
         position: fixed;
         left: 50%;
         transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
         width: 100%;
         max-width: 726px;
         bottom: 0;
         display: flex;
         padding-top: 15px;
-        padding-bottom: 25px;
+        padding-bottom: calc(25px + env(safe-area-inset-bottom, 0px));
         background: rgba(255, 255, 255, 0.92);
+        -webkit-backdrop-filter: saturate(180%) blur(10px);
         backdrop-filter: saturate(180%) blur(10px);
         box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
         z-index: 10;

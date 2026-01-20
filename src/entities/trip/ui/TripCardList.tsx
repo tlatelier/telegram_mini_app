@@ -12,10 +12,10 @@ import './styles/tripCardList.less';
 
 const tripCardListClass = 'tripSection';
 
-const activeTrips = selectAllActiveTrips();
-const inactiveTrips = selectAllInactiveTrips();
-
 const TripCardList = () => {
+    // Получаем поездки (массив уже отсортирован в правильном порядке)
+    const activeTrips = selectAllActiveTrips();
+    const inactiveTrips = selectAllInactiveTrips();
     const [inactiveOpenTripId, setInactiveOpenTripId] = useState<string | null>(null);
 
     const showInactiveTripOffer = useCallback((id: string) => {

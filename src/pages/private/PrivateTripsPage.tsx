@@ -1,10 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { Button } from '@shared/ui/button/Button';
 import { FAQ } from '@shared/ui/faq/FAQ.tsx';
 import { CaseOverlay } from '@widgets/case-overlay/CaseOverlay';
 import { Bitrix24InlineForm } from '../../features/lead-form/Bitrix24InlineForm.tsx';
 import { TripPreferencesSection, type TripPreferencesValue } from './TripPreferencesSection.tsx';
 import { withBase } from '@shared/lib/utils/withBase.ts';
+import { preloadImages } from '@shared/lib/utils/preloadImages.ts';
 import './private-trips.less';
 
 const cls = 'privateTrips';
@@ -253,6 +254,42 @@ const PrivateTripsPage = () => {
         const daysCount = CASES[selectedCaseIndex].days.length;
         setActiveDay((d) => (d + 1) % daysCount);
     };
+
+    // Предзагрузка изображений для всех кейсов при загрузке страницы (в фоне)
+    useEffect(() => {
+        // Приоритетные изображения (карточки кейсов) - загружаем сразу
+        const priorityImages: string[] = [];
+        CASES.forEach((c) => {
+            if (c.img) {
+                priorityImages.push(withBase(c.img));
+            }
+        });
+        
+        // Остальные изображения (дни и вдохновение) - загружаем в фоне
+        const backgroundImages: string[] = [];
+        CASES.forEach((c) => {
+            c.days.forEach((d) => {
+                if (d.photo) {
+                    backgroundImages.push(withBase(d.photo));
+                }
+            });
+        });
+        INSPIRATION.forEach((src) => {
+            backgroundImages.push(withBase(src));
+        });
+        
+        // Загружаем приоритетные сразу
+        if (priorityImages.length > 0) {
+            preloadImages(priorityImages).catch(() => {});
+        }
+        
+        // Загружаем остальные в фоне с задержкой
+        if (backgroundImages.length > 0) {
+            setTimeout(() => {
+                preloadImages(backgroundImages).catch(() => {});
+            }, 500);
+        }
+    }, []);
 
     return (
         <div className={cls}>

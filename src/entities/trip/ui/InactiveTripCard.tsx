@@ -1,9 +1,11 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useState, useEffect } from 'react';
+import { flushSync } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { bem } from '@shared/lib/utils/bem.ts';
 import { Button } from "@shared/ui/button/Button.tsx";
 import { getDestinationKeyByName } from '@shared/lib/destinations.ts';
 import { withBase } from '@shared/lib/utils/withBase.ts';
+import { submitBitrix24Form } from '@shared/lib/utils/submitBitrix24Form.ts';
 import type { TripDataType } from '../model/type.h';
 
 import './styles/inactiveTripCard.less';
@@ -24,6 +26,15 @@ const InactiveTripCard = (props: InactiveTripCardType) => {
     } = props;
 
     const navigate = useNavigate();
+    const [formSubmitted, setFormSubmitted] = useState(false);
+
+    // Сбрасываем состояние при закрытии оверлея
+    useEffect(() => {
+        if (!canShowInactiveTripOffer) {
+            setFormSubmitted(false);
+        }
+    }, [canShowInactiveTripOffer]);
+
 
     const destinationKey = useMemo(() => {
         return getDestinationKeyByName(destination ?? '');
@@ -39,8 +50,31 @@ const InactiveTripCard = (props: InactiveTripCardType) => {
         ${componentClass}
         ${canShowInactiveTripOffer ? bem(componentClass, 'blur') : ''}`;
 
-    // Вынести отдельно, как-то унифицировать
-    const handleInterestClick = useCallback(() => {}, []);
+    const handleInterestClick = useCallback((event?: React.MouseEvent<HTMLDivElement>) => {
+        // Останавливаем всплытие, чтобы не сработал onClick на родительском div
+        if (event) {
+            event.stopPropagation();
+            event.preventDefault();
+        }
+        
+        // Если форма уже отправлена, закрываем оверлей (возвращаем в первоначальное состояние)
+        if (formSubmitted) {
+            showInactiveTripOffer();
+            return;
+        }
+        
+        // Отправляем данные в Bitrix24 сразу, независимо от компонентов
+        submitBitrix24Form({
+            b24Form: 'inline/13/cibjyu',
+            loaderUrl: 'https://cdn-ru.bitrix24.ru/b34565224/crm/form/loader_13.js',
+            destination: destination ?? '',
+        });
+        
+        // Показываем финальный экран сразу
+        flushSync(() => {
+            setFormSubmitted(true);
+        });
+    }, [formSubmitted, showInactiveTripOffer, destination]);
 
     return (
         <div
@@ -49,7 +83,10 @@ const InactiveTripCard = (props: InactiveTripCardType) => {
             style={{ backgroundImage: `url(${withBase(background)})` }}
         >
             {canShowInactiveTripOffer ? (
-                <div className={bem(componentClass, 'offer')}>
+                <div 
+                    className={bem(componentClass, 'offer')}
+                    onClick={(e) => e.stopPropagation()}
+                >
                     <div className={bem(componentClass, 'offer-header')}>
                         <span className={bem(componentClass, 'offer-destination')}>
                             {destination}
@@ -64,24 +101,39 @@ const InactiveTripCard = (props: InactiveTripCardType) => {
                         )}
                     </div>
 
-                    <div className={bem(componentClass, 'offer-info')}>
-                        Круто! Мы вернемся к вам в приоритетном порядке, когда сформируем предложние на это направление!
-                        Скажите нам, что вам интересно это направление, — и мы вернемся с предложением, когда решим его
-                        повторить!
+                    <div 
+                        key={formSubmitted ? 'submitted' : 'initial'}
+                        className={bem(componentClass, 'offer-info')}
+                    >
+                        {formSubmitted ? (
+                            <span>
+                                Спасибо за интерес! Мы вернемся к вам в приоритетном порядке, когда сформируем предложение на это направление.
+                            </span>
+                        ) : (
+                            <span>
+                                Это направление завершилось, но мы можем повторить его для вас! Если вам интересно это направление, дайте нам знать — мы вернемся с предложением, когда решим его повторить.
+                            </span>
+                        )}
                     </div>
 
-                    <div className={bem(componentClass, 'offer-actions')}>
+                    <div 
+                        className={bem(componentClass, 'offer-actions')}
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         {destinationKey && (
                             <Button
                                 active={true}
                                 text="Фотографии"
-                                callback={handleComponentClick}
+                                callback={(e) => {
+                                    e?.stopPropagation();
+                                    handleComponentClick();
+                                }}
                                 auxClass={bem(componentClass, 'offer-button--secondary')}
                             />
                         )}
                         <Button
                             common={true}
-                            text='Спасибо / Интересно'
+                            text={formSubmitted ? 'Закрыть' : 'Интересно'}
                             callback={handleInterestClick}
                             auxClass={bem(componentClass, 'offer-button--primary')}
                         />

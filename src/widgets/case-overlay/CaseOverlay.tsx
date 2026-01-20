@@ -1,5 +1,8 @@
 import { Button } from '@shared/ui/button/Button';
 import { OverlayCarousel } from '../../features/overlay/OverlayCarousel';
+import { preloadImages } from '@shared/lib/utils/preloadImages.ts';
+import { withBase } from '@shared/lib/utils/withBase.ts';
+import { useEffect } from 'react';
 import './case-overlay.less';
 import { Fragment } from "react";
 
@@ -27,6 +30,23 @@ const CaseOverlay = ({
     onClose,
 }: CaseOverlayProps) => {
     const current = days[active];
+
+    // Предзагрузка всех изображений дней при открытии overlay (в фоне)
+    useEffect(() => {
+        const imageUrls = days
+            .map((d) => d.photo)
+            .filter((photo): photo is string => Boolean(photo))
+            .map((photo) => withBase(photo));
+        
+        if (imageUrls.length > 0) {
+            // Загружаем в фоне, не блокируя открытие overlay
+            setTimeout(() => {
+                preloadImages(imageUrls).catch(() => {
+                    // Игнорируем ошибки предзагрузки
+                });
+            }, 100);
+        }
+    }, [days]);
 
     return (
         <div className={`${cls}`}>

@@ -42,7 +42,7 @@ export const OverlayCarousel = ({
                     loop={false}
                     autoplayInterval={null}
                     showControls={false}
-                    itemHeight="100dvh"
+                    itemHeight="100vh"
                     backgroundFit="cover"
                 />
             </div>

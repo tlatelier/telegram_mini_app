@@ -42,10 +42,10 @@ const ActiveTripCard = (props: TripCardProps) => {
             className={componentClass}
             style={{ backgroundImage: `url(${withBase(background)})` }}
         >
+            <span className={`${componentClass}__badge ${componentClass}__badge--${mod}`}>
+                {text}
+            </span>
             <div className={bem(componentClass, 'info')}>
-                <span className={`${componentClass}__badge ${componentClass}__badge--${mod}`}>
-                    {text}
-                </span>
                 <div className={bem(componentClass, 'meta')}>
                     <span className={bem(componentClass, 'date')}>{date}</span>
                     <span className={bem(componentClass, 'destination')}>{destination}</span>

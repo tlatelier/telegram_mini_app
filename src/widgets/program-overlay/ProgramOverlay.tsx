@@ -2,6 +2,8 @@ import {
     useEffect, useMemo, useState,
 } from 'react';
 import { OverlayCarousel } from '../../features/overlay/OverlayCarousel';
+import { preloadImages } from '@shared/lib/utils/preloadImages.ts';
+import { withBase } from '@shared/lib/utils/withBase.ts';
 import './program-overlay.less';
 import { ProgramDaySection } from './ProgramDaySection.tsx';
 import { ProgramExtraSection } from './ProgramExtraSection.tsx';
@@ -51,6 +53,22 @@ const ProgramOverlay = (props: ProgramOverlayProps) => {
 
         return [...days.map((d) => d.photo ?? ''), finalImage];
     }, [days]);
+
+    // Предзагрузка всех изображений дней при открытии overlay (в фоне)
+    useEffect(() => {
+        const imageUrls = images
+            .filter((img): img is string => Boolean(img))
+            .map((img) => withBase(img));
+        
+        if (imageUrls.length > 0) {
+            // Загружаем в фоне, не блокируя открытие overlay
+            setTimeout(() => {
+                preloadImages(imageUrls).catch(() => {
+                    // Игнорируем ошибки предзагрузки
+                });
+            }, 100);
+        }
+    }, [images]);
 
     const isFinal = displayIndex === days.length;
     const current = days[Math.min(displayIndex, days.length - 1)];

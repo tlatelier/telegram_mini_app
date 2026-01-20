@@ -42,12 +42,18 @@ import {
     inactiveTripDataUar,
 } from './trips/previous/uar';
 
+// Сортируем поездки вручную по дате начала (от ближайшей к дальней):
+// 1. Катар: 4-8 февраля
+// 2. Байкал: 19-23 февраля
+// 3. Южная Африка: 3-16 марта
+// 4. Мурманск: 7-9 марта
+// 5. Узбекистан: 1-5 апреля
 const activeTripData: TripDataType[] = [
-    activeTripDataSouthAfrica,
-    activeTripDataBaikal,
-    activeTripDataMurmanskActive,
-    activeTripDataQatarWinter,
-    activeTripDataUzbekistan,
+    activeTripDataQatarWinter,      // 4-8 февраля (ближайшая)
+    activeTripDataBaikal,           // 19-23 февраля
+    activeTripDataSouthAfrica,      // 3-16 марта
+    activeTripDataMurmanskActive,   // 7-9 марта
+    activeTripDataUzbekistan,       // 1-5 апреля (самая дальняя)
 ];
 
 const inactiveTripData: TripDataType[] = [

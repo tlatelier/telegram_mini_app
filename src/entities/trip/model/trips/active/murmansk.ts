@@ -50,7 +50,7 @@ const tripDetailsMurmanskActive: TripDetailsType = {
                 'Размещение в загородном отеле, ужин и баня.',
                 'Охота за северным сиянием (при благоприятном прогнозе).',
             ],
-            photo: '/images/trips/active/murmansk/promo/promo1.webp',
+            photo: '/images/trips/active/murmansk/programm/programm-1.webp',
         },
         {
             title: 'Териберка — край земли Русской',
@@ -60,7 +60,7 @@ const tripDetailsMurmanskActive: TripDetailsType = {
                 'Морская прогулка в поисках китов.',
                 'Обед с видом на Баренцево море, возвращение в Мурманск и ужин в ресторане.',
             ],
-            photo: '/images/trips/active/murmansk/promo/promo2.webp',
+            photo: '/images/trips/active/murmansk/programm/programm-2.webp',
         },
         {
             title: 'Тундра‑парк и умеренный драйв',
@@ -71,7 +71,7 @@ const tripDetailsMurmanskActive: TripDetailsType = {
                 'Обед с ухой.',
                 'Заезд за сувенирами и ранний ужин перед вылетом домой.',
             ],
-            photo: '/images/trips/active/murmansk/promo/promo3.webp',
+            photo: '/images/trips/active/murmansk/programm/programm-3.webp',
         },
     ],
     faq: [

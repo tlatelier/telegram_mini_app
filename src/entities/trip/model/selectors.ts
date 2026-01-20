@@ -14,10 +14,14 @@ import {
     inactiveTripData,
 } from './index';
 
-// Общие хелперы
-const selectAllActiveTrips = (): TripDataType[] => activeTripData;
+// Массив уже отсортирован вручную в правильном порядке в index.ts (от ближайшей к дальней)
+// Просто возвращаем массив как есть, фильтрация прошедших не нужна - они уже в inactiveTripData
+const selectAllActiveTrips = (): TripDataType[] => {
+    return activeTripData;
+};
+
 const selectAllInactiveTrips = (): TripDataType[] => inactiveTripData;
-const selectAllTrips = (): TripDataType[] => [...activeTripData, ...inactiveTripData];
+const selectAllTrips = (): TripDataType[] => [...selectAllActiveTrips(), ...inactiveTripData];
 
 const selectTripDataById = (id: TripId): TripDataType | undefined => {
     return (

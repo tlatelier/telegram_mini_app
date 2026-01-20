@@ -4,6 +4,7 @@ import {
 import { useLocation } from 'react-router-dom';
 import { DESTINATIONS } from '@shared/lib/destinations.ts';
 import type { DestinationKey } from '@shared/lib/destinations.ts';
+import { ImageSkeleton } from '@shared/ui/image-skeleton/ImageSkeleton.tsx';
 import './gallery.less';
 
 const BASE_URL: string = (import.meta as any)?.env?.BASE_URL ?? '/';
@@ -37,6 +38,7 @@ const GalleryPage = () => {
 
     const [dest, setDest] = useState<string | 'all'>(getDestFromSearch);
     const [open, setOpen] = useState<null | 'year' | 'dest'>(null);
+    const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -67,6 +69,16 @@ const GalleryPage = () => {
         return imagesByDestination[dest] ?? [];
     }, [allImages, imagesByDestination, dest]);
 
+    // Отслеживание загрузки изображений
+    const handleImageLoad = (imageUrl: string) => {
+        setLoadedImages((prev) => new Set([...prev, imageUrl]));
+    };
+
+    const handleImageError = (imageUrl: string) => {
+        // Помечаем как загруженное даже при ошибке, чтобы скрыть скелетон
+        setLoadedImages((prev) => new Set([...prev, imageUrl]));
+    };
+
     return (
         <div className="galleryPage">
             {(() => {
@@ -79,34 +91,50 @@ const GalleryPage = () => {
                 return (
                     <div className="galleryPage__columns">
                         <div className="galleryPage__col">
-                            {left.map((image) => (
-                                <div
-                                    key={image}
-                                    className="galleryPage__item"
-                                >
-                                    <img
-                                        alt={image}
-                                        src={image}
-                                        loading="lazy"
-                                        className="galleryPage__img"
-                                    />
-                                </div>
-                            ))}
+                            {left.map((image) => {
+                                const isLoaded = loadedImages.has(image);
+                                return (
+                                    <div
+                                        key={image}
+                                        className="galleryPage__item"
+                                    >
+                                        {!isLoaded && (
+                                            <ImageSkeleton className="galleryPage__skeleton" />
+                                        )}
+                                        <img
+                                            alt={image}
+                                            src={image}
+                                            loading="lazy"
+                                            className={`galleryPage__img ${isLoaded ? 'galleryPage__img--loaded' : 'galleryPage__img--loading'}`}
+                                            onLoad={() => handleImageLoad(image)}
+                                            onError={() => handleImageError(image)}
+                                        />
+                                    </div>
+                                );
+                            })}
                         </div>
                         <div className="galleryPage__col">
-                            {right.map((image) => (
-                                <div
-                                    key={image}
-                                    className="galleryPage__item"
-                                >
-                                    <img
-                                        alt={image}
-                                        src={image}
-                                        loading="lazy"
-                                        className="galleryPage__img"
-                                    />
-                                </div>
-                            ))}
+                            {right.map((image) => {
+                                const isLoaded = loadedImages.has(image);
+                                return (
+                                    <div
+                                        key={image}
+                                        className="galleryPage__item"
+                                    >
+                                        {!isLoaded && (
+                                            <ImageSkeleton className="galleryPage__skeleton" />
+                                        )}
+                                        <img
+                                            alt={image}
+                                            src={image}
+                                            loading="lazy"
+                                            className={`galleryPage__img ${isLoaded ? 'galleryPage__img--loaded' : 'galleryPage__img--loading'}`}
+                                            onLoad={() => handleImageLoad(image)}
+                                            onError={() => handleImageError(image)}
+                                        />
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 );

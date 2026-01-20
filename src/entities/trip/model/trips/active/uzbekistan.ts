@@ -4,17 +4,18 @@ import { TripStatus } from '../../type.h';
 const activeTripDataUzbekistan: TripDataType = {
     id: 'uzbekistan-apr-2026-1',
     date: '1–5 апреля',
-    // В excel фото «нет» — используем существующие фото из private-кейсов, чтобы не было 404.
-    background: '/images/private/previous/uzbekistan/private-previous-uzbekistan-1.webp',
+    background: '/images/trips/active/uzbekistan/promo/promo1.webp',
     destination: 'Узбекистан',
     title: 'Узбекистан: Цветение жизни',
     dateStart: '1 апреля',
     dateEnd: '5 апреля',
     gallery: [
-        '/images/private/previous/uzbekistan/private-previous-uzbekistan-1.webp',
-        '/images/private/previous/uzbekistan/private-previous-uzbekistan-2.webp',
-        '/images/private/previous/uzbekistan/private-previous-uzbekistan-3.webp',
-        '/images/private/previous/uzbekistan/private-previous-uzbekistan-4.webp',
+        '/images/trips/active/uzbekistan/promo/promo1.webp',
+        '/images/trips/active/uzbekistan/promo/promo2.webp',
+        '/images/trips/active/uzbekistan/promo/promo3.webp',
+        '/images/trips/active/uzbekistan/promo/promo4.webp',
+        '/images/trips/active/uzbekistan/promo/promo5.webp',
+        '/images/trips/active/uzbekistan/promo/promo6.webp',
     ],
     priceFrom: 1050,
     currency: 'USD',
@@ -47,7 +48,7 @@ const tripDetailsUzbekistan: TripDetailsType = {
                 'Шахи‑Зинда, площадь Регистан и комплекс из трёх медресе.',
                 'Ужин в ресторане и отдых.',
             ],
-            photo: '/images/private/previous/uzbekistan/private-previous-uzbekistan-1.webp',
+            photo: '/images/trips/active/uzbekistan/programm/programm-1.webp',
         },
         {
             title: 'Самарканд',
@@ -57,7 +58,7 @@ const tripDetailsUzbekistan: TripDetailsType = {
                 'Базар Сиаб — старейший рынок Самарканда.',
                 'Ужин в ресторане и отдых.',
             ],
-            photo: '/images/private/previous/uzbekistan/private-previous-uzbekistan-2.webp',
+            photo: '/images/trips/active/uzbekistan/programm/programm-2.webp',
         },
         {
             title: 'Переезд в Бухару',
@@ -67,7 +68,7 @@ const tripDetailsUzbekistan: TripDetailsType = {
                 'Аутентичная чайная: кофе с кардамоном и чай с сухофруктами.',
                 'Ужин в старинном доме еврейского купца XIX века (один из лучших ресторанов города).',
             ],
-            photo: '/images/private/previous/uzbekistan/private-previous-uzbekistan-3.webp',
+            photo: '/images/trips/active/uzbekistan/programm/programm-3.webp',
         },
         {
             title: 'Бухара',
@@ -77,7 +78,7 @@ const tripDetailsUzbekistan: TripDetailsType = {
                 'Мавзолей Бахоуддина Накшбанди — место для молитвы и духовного очищения.',
                 'Свободное время для покупок и ужин в ресторане.',
             ],
-            photo: '/images/private/previous/uzbekistan/private-previous-uzbekistan-4.webp',
+            photo: '/images/trips/active/uzbekistan/programm/programm-4.webp',
         },
         {
             title: 'Вылет домой',
@@ -85,7 +86,7 @@ const tripDetailsUzbekistan: TripDetailsType = {
                 'Ланч‑бокс из отеля.',
                 'Трансфер в аэропорт и вылет домой.',
             ],
-            photo: '/images/private/previous/uzbekistan/private-previous-uzbekistan-1.webp',
+            photo: '/images/trips/active/uzbekistan/programm/programm-5.webp',
         },
     ],
     faq: [

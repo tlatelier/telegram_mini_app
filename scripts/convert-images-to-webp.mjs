@@ -36,11 +36,13 @@ const IMAGES_DIR = path.resolve(ROOT, "public", "images");
 const INPUT_EXTS = new Set([".heic", ".heif", ".jpeg", ".jpg", ".png", ".webp"]);
 
 // Настройки качества/ресайза WebP
-const QUALITY = Number(process.env.WEBP_QUALITY ?? 80);
+// Оптимизированные настройки для лучшего сжатия
+const QUALITY = Number(process.env.WEBP_QUALITY ?? 75); // Снижено с 80 до 75 для лучшего сжатия
 const LOSSLESS = String(process.env.WEBP_LOSSLESS ?? "false") === "true";
-const EFFORT = Number(process.env.EFFORT ?? 6); // 0..6
-const MAX_WIDTH = Number(process.env.MAX_WIDTH ?? 0); // 0 = без ограничения
-const MAX_HEIGHT = Number(process.env.MAX_HEIGHT ?? 0); // 0 = без ограничения
+const EFFORT = Number(process.env.EFFORT ?? 6); // 0..6 (максимальное сжатие)
+// Ограничение размера для больших изображений (оптимизация для веб)
+const MAX_WIDTH = Number(process.env.MAX_WIDTH ?? 1920); // Максимальная ширина для веб
+const MAX_HEIGHT = Number(process.env.MAX_HEIGHT ?? 1920); // Максимальная высота для веб
 
 function formatBytes(bytes) {
     if (!Number.isFinite(bytes)) return `${bytes}`;

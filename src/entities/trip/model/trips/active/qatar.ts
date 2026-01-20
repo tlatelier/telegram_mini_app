@@ -4,8 +4,7 @@ import { TripStatus } from '../../type.h';
 const activeTripDataQatarWinter: TripDataType = {
     id: 'qatar-feb-2026-1',
     date: '4–8 февраля',
-    // В excel фото «нет» — используем нейтральную обложку, чтобы не было 404.
-    background: '/images/private/inspiration/private-trip-inspiration-1.webp',
+    background: '/images/trips/active/qatar/promo/promo1.webp',
     destination: 'Катар',
     title: 'Арт путешествие в Катар',
     dateStart: '4 февраля',
@@ -15,6 +14,14 @@ const activeTripDataQatarWinter: TripDataType = {
     duration: '5',
     locationsCount: 7,
     status: TripStatus.Upcoming,
+    gallery: [
+        '/images/trips/active/qatar/promo/promo1.webp',
+        '/images/trips/active/qatar/promo/promo2.webp',
+        '/images/trips/active/qatar/promo/promo3.webp',
+        '/images/trips/active/qatar/promo/promo4.webp',
+        '/images/trips/active/qatar/promo/promo5.webp',
+        '/images/trips/active/qatar/promo/promo6.webp',
+    ],
 };
 
 const tripDetailsQatarWinter: TripDetailsType = {
@@ -40,7 +47,7 @@ const tripDetailsQatarWinter: TripDetailsType = {
                 'Прибытие в Доху, трансфер в отель, размещение и ужин в ресторане.',
                 'Знакомство с участниками путешествия за ужином.',
             ],
-            photo: '/images/private/inspiration/private-trip-inspiration-1.webp',
+            photo: '/images/trips/active/qatar/programm/programm-1.webp',
         },
         {
             title: 'Знакомство с регионом',
@@ -49,7 +56,7 @@ const tripDetailsQatarWinter: TripDetailsType = {
                 'Обзорная прогулка по столице с гидом: восточный рынок, культурная деревня, Национальный музей Катара и арт‑объекты в городе.',
                 'Обед в ресторане и свободное время.',
             ],
-            photo: '/images/private/inspiration/private-trip-inspiration-2.webp',
+            photo: '/images/trips/active/qatar/programm/programm-2.webp',
         },
         {
             title: 'Ярмарка современного искусства Art Basel Qatar',
@@ -59,7 +66,7 @@ const tripDetailsQatarWinter: TripDetailsType = {
                 'Обед и обсуждение‑рефлексия по итогам медиации.',
                 'Свободное время или посещение музеев / шоппинг.',
             ],
-            photo: '/images/private/inspiration/private-trip-inspiration-3.webp',
+            photo: '/images/trips/active/qatar/programm/programm-3.webp',
         },
         {
             title: 'Сафари в пустыне',
@@ -70,7 +77,7 @@ const tripDetailsQatarWinter: TripDetailsType = {
                 'По желанию: сэндбординг и квадроциклы (за доп. оплату).',
                 'Возвращение к вечеру в отель.',
             ],
-            photo: '/images/private/inspiration/private-trip-inspiration-4.webp',
+            photo: '/images/trips/active/qatar/programm/programm-4.webp',
         },
         {
             title: 'Отправление домой',
@@ -78,7 +85,7 @@ const tripDetailsQatarWinter: TripDetailsType = {
                 'Завтрак в отеле / ланч‑бокс.',
                 'Трансфер в аэропорт, вылет в Россию.',
             ],
-            photo: '/images/private/inspiration/private-trip-inspiration-5.webp',
+            photo: '/images/trips/active/qatar/programm/programm-5.webp',
         },
     ],
     faq: [

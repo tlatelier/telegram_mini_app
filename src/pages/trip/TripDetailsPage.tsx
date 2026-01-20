@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
     tripDetails,
@@ -10,6 +10,7 @@ import { ProgramOverlay } from '@widgets/program-overlay/ProgramOverlay.tsx';
 import { AutoCarousel } from '@shared/ui/carousel/AutoCarousel.tsx';
 import { Bitrix24InlineForm } from '../../features/lead-form/Bitrix24InlineForm.tsx';
 import { withBase } from '@shared/lib/utils/withBase.ts';
+import { preloadImages } from '@shared/lib/utils/preloadImages.ts';
 
 import './trip-details.less';
 
@@ -47,6 +48,47 @@ const TripDetailsPage = () => {
     const tripTitle = trip.title ?? trip.destination;
     const tripDates = `${trip.dateStart ?? trip.date ?? ''}${trip.dateEnd ? ` — ${trip.dateEnd}` : ''}`;
     const leadText = `Название проекта: ${tripTitle}\nДаты проекта: ${tripDates}`;
+
+    // Предзагрузка всех изображений поездки при загрузке страницы (в фоне)
+    useEffect(() => {
+        // Приоритетные изображения (галерея) - загружаем сразу
+        const priorityImages: string[] = [];
+        if (trip.gallery && trip.gallery.length > 0) {
+            // Первые 4 изображения галереи - приоритет
+            trip.gallery.slice(0, 4).forEach((src) => {
+                priorityImages.push(withBase(src));
+            });
+        }
+        
+        // Остальные изображения - загружаем в фоне
+        const backgroundImages: string[] = [];
+        if (trip.gallery && trip.gallery.length > 4) {
+            trip.gallery.slice(4).forEach((src) => {
+                backgroundImages.push(withBase(src));
+            });
+        }
+        
+        // Изображения дней программы - в фоне
+        if (details?.days) {
+            details.days.forEach((d) => {
+                if (d.photo) {
+                    backgroundImages.push(withBase(d.photo));
+                }
+            });
+        }
+        
+        // Загружаем приоритетные сразу
+        if (priorityImages.length > 0) {
+            preloadImages(priorityImages).catch(() => {});
+        }
+        
+        // Загружаем остальные в фоне с задержкой
+        if (backgroundImages.length > 0) {
+            setTimeout(() => {
+                preloadImages(backgroundImages).catch(() => {});
+            }, 500);
+        }
+    }, [trip.gallery, details?.days]);
 
     return (
         <div className={cls}>
