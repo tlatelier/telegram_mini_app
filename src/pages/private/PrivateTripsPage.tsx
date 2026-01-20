@@ -4,6 +4,7 @@ import { FAQ } from '@shared/ui/faq/FAQ.tsx';
 import { CaseOverlay } from '@widgets/case-overlay/CaseOverlay';
 import { Bitrix24InlineForm } from '../../features/lead-form/Bitrix24InlineForm.tsx';
 import { TripPreferencesSection, type TripPreferencesValue } from './TripPreferencesSection.tsx';
+import { withBase } from '@shared/lib/utils/withBase.ts';
 import './private-trips.less';
 
 const cls = 'privateTrips';
@@ -305,7 +306,7 @@ const PrivateTripsPage = () => {
                         >
                             <div
                                 className={`${cls}__caseImage`}
-                                style={{ backgroundImage: `url(${c.img})` }}
+                                style={{ backgroundImage: `url(${withBase(c.img)})` }}
                             />
                             <div className={`${cls}__caseBody`}>
                                 <div className={`${cls}__caseTitle`}>{c.title}</div>
@@ -412,7 +413,7 @@ const PrivateTripsPage = () => {
                             className={`${cls}__inspItem`}
                         >
                             <img
-                                src={src}
+                                src={withBase(src)}
                                 loading="lazy"
                                 alt="inspiration"
                                 className={`${cls}__inspImg`}

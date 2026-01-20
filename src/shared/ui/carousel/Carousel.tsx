@@ -2,6 +2,7 @@ import {
     useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 import './carousel.less';
+import { withBase } from '@shared/lib/utils/withBase.ts';
 
 type CarouselProps = {
     slides: (string | React.ReactNode)[];
@@ -129,6 +130,7 @@ export const Carousel = ({
             >
                 {slides.map((slide, i) => {
                     const isString = typeof slide === 'string';
+                    const slideUrl = isString ? withBase(slide) : undefined;
 
                     return (
                         <div
@@ -137,7 +139,7 @@ export const Carousel = ({
                             style={{
                                 height:
                                     typeof itemHeight === 'number' ? `${itemHeight}px` : itemHeight,
-                                backgroundImage: isString ? `url(${slide})` : undefined,
+                                backgroundImage: isString ? `url(${slideUrl})` : undefined,
                                 backgroundSize: isString ? backgroundFit : undefined,
                                 backgroundRepeat: isString ? 'no-repeat' : undefined,
                                 backgroundPosition: isString ? 'center' : undefined,

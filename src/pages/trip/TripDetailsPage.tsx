@@ -9,6 +9,7 @@ import { FAQ } from '@shared/ui/faq/FAQ.tsx';
 import { ProgramOverlay } from '@widgets/program-overlay/ProgramOverlay.tsx';
 import { AutoCarousel } from '@shared/ui/carousel/AutoCarousel.tsx';
 import { Bitrix24InlineForm } from '../../features/lead-form/Bitrix24InlineForm.tsx';
+import { withBase } from '@shared/lib/utils/withBase.ts';
 
 import './trip-details.less';
 
@@ -78,7 +79,7 @@ const TripDetailsPage = () => {
                         <div
                             key={i}
                             className={`${cls}__photosItem`}
-                            style={{ backgroundImage: `url(${src})` }}
+                            style={{ backgroundImage: `url(${withBase(src)})` }}
                         />
                     ))}
                 </div>
@@ -132,7 +133,7 @@ const TripDetailsPage = () => {
                 >
                     <div
                         className={`${cls}__programHero-bg`}
-                        style={{ backgroundImage: `url(${days[0].photo ?? ''})` }}
+                        style={{ backgroundImage: `url(${withBase(days[0].photo ?? '')})` }}
                     />
                     <div className={`${cls}__programHero-mask`} />
                     <div className={`${cls}__programHero-content`}>

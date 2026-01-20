@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { bem } from '@shared/lib/utils/bem.ts';
 import { Button } from "@shared/ui/button/Button.tsx";
 import { getDestinationKeyByName } from '@shared/lib/destinations.ts';
+import { withBase } from '@shared/lib/utils/withBase.ts';
 import type { TripDataType } from '../model/type.h';
 
 import './styles/inactiveTripCard.less';
@@ -45,7 +46,7 @@ const InactiveTripCard = (props: InactiveTripCardType) => {
         <div
             className={cardClass}
             onClick={showInactiveTripOffer}
-            style={{ backgroundImage: `url(${background})` }}
+            style={{ backgroundImage: `url(${withBase(background)})` }}
         >
             {canShowInactiveTripOffer ? (
                 <div className={bem(componentClass, 'offer')}>
