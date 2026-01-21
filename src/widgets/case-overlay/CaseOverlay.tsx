@@ -62,8 +62,8 @@ const CaseOverlay = ({
                             <div className={`${cls}__title`}>{title}</div>
                             {meta && <div className={`${cls}__meta`}>{meta}</div>}
                         </div>
+                        <div className={`${cls}__mask`} />
                         <div className={`${cls}__content`}>
-                            <div className={`${cls}__mask`} />
                             <div className={`${cls}__meta`}>
                                 {current?.title}
                             </div>

@@ -4,18 +4,18 @@ import { TripStatus } from '../../type.h';
 const activeTripDataSouthAfrica: TripDataType = {
     id: 'south-africa-mar-2026-1',
     date: '3–16 марта',
-    background: '/images/trips/active/south-africa/promo/promo1.webp',
+    background: '/images/trips/active/south-africa/promo/southafrice-promo-1.webp',
     destination: 'Южная Африка',
     title: 'На край Земли в Южную Африку',
     dateStart: '3 марта',
     dateEnd: '16 марта',
     gallery: [
-        '/images/trips/active/south-africa/promo/promo1.webp',
-        '/images/trips/active/south-africa/promo/promo2.webp',
-        '/images/trips/active/south-africa/promo/promo3.webp',
-        '/images/trips/active/south-africa/promo/promo4.webp',
-        '/images/trips/active/south-africa/promo/promo5.webp',
-        '/images/trips/active/south-africa/promo/promo6.webp',
+        '/images/trips/active/south-africa/promo/southafrice-promo-1.webp',
+        '/images/trips/active/south-africa/promo/southafrice-promo-2.webp',
+        '/images/trips/active/south-africa/promo/southafrice-promo-3.webp',
+        '/images/trips/active/south-africa/promo/southafrice-promo-4.webp',
+        '/images/trips/active/south-africa/promo/southafrice-promo-5.webp',
+        '/images/trips/active/south-africa/promo/southafrice-promo-6.webp',
     ],
     priceFrom: 5200,
     currency: 'USD',
@@ -47,14 +47,14 @@ const tripDetailsSouthAfrica: TripDetailsType = {
                 'Вылет из России с пересадкой, прибытие в Кейптаун.',
                 'Встреча в аэропорту и трансфер в отель.',
             ],
-            photo: '/images/trips/active/south-africa/programm/programm-1.webp',
+            photo: '/images/trips/active/south-africa/programm/southafrice-programm-1.webp',
         },
         {
             title: 'Добро пожаловать в Кейптаун',
             activities: [
                 'Встреча в аэропорту, трансфер в отель и знакомство с городом.',
             ],
-            photo: '/images/trips/active/south-africa/programm/programm-2.webp',
+            photo: '/images/trips/active/south-africa/programm/southafrice-programm-2.webp',
         },
         {
             title: 'Мыс Доброй Надежды (Cape of Good Hope)',
@@ -65,7 +65,7 @@ const tripDetailsSouthAfrica: TripDetailsType = {
                 'Boulders Beach: знакомство с пингвинами.',
                 'Обед с видом на океан и возвращение в город.',
             ],
-            photo: '/images/trips/active/south-africa/programm/programm-2.webp',
+            photo: '/images/trips/active/south-africa/programm/southafrice-programm-3.webp',
         },
         {
             title: 'Столовая гора (Кейптаун)',
@@ -75,7 +75,7 @@ const tripDetailsSouthAfrica: TripDetailsType = {
                 'Подъём на Столовую гору — панорама Кейптауна.',
                 'Посещение старейших винных ферм региона Констанция.',
             ],
-            photo: '/images/trips/active/south-africa/programm/programm-3.webp',
+            photo: '/images/trips/active/south-africa/programm/southafrice-programm-4.webp',
         },
         {
             title: 'Кейптаун (свободный день)',
@@ -83,7 +83,7 @@ const tripDetailsSouthAfrica: TripDetailsType = {
                 'Свободное время для отдыха, шоппинга или прогулок.',
                 'Вечером — морской круиз на закате.',
             ],
-            photo: '/images/trips/active/south-africa/programm/programm-4.webp',
+            photo: '/images/trips/active/south-africa/programm/southafrice-programm-5.webp',
         },
         {
             title: 'Город Херманус',
@@ -92,7 +92,7 @@ const tripDetailsSouthAfrica: TripDetailsType = {
                 'По пути — частная ферма со спасёнными гепардами и другими животными.',
                 'Размещение в отеле в Херманусе.',
             ],
-            photo: '/images/trips/active/south-africa/programm/programm-5.webp',
+            photo: '/images/trips/active/south-africa/programm/southafrice-programm-6.webp',
         },
         {
             title: 'Мыс Игольный',
@@ -100,7 +100,7 @@ const tripDetailsSouthAfrica: TripDetailsType = {
                 'Прогулка на самую южную точку Африканского континента.',
                 'Место с сильной энергетикой и «идеальным» компасом (без магнитного отклонения).',
             ],
-            photo: '/images/trips/active/south-africa/programm/programm-7.webp',
+            photo: '/images/trips/active/south-africa/programm/southafrice-programm-7.webp',
         },
         {
             title: 'Франчхук (винный регион)',
@@ -110,14 +110,14 @@ const tripDetailsSouthAfrica: TripDetailsType = {
                 'Посещение лучших виноделен региона.',
                 'Размещение в отеле и отдых.',
             ],
-            photo: '/images/trips/active/south-africa/programm/programm-8.webp',
+            photo: '/images/trips/active/south-africa/programm/southafrice-programm-8.webp',
         },
         {
             title: 'Франчхук (свободный день)',
             activities: [
                 'День для отдыха и расслабления.',
             ],
-            photo: '/images/trips/active/south-africa/programm/programm-9.webp',
+            photo: '/images/trips/active/south-africa/programm/southafrice-programm-9.webp',
         },
         {
             title: 'Перелёт на водопад Виктория',
@@ -126,7 +126,7 @@ const tripDetailsSouthAfrica: TripDetailsType = {
                 'Экскурсия на водопад со стороны Зимбабве.',
                 'Переезд в отель и размещение.',
             ],
-            photo: '/images/trips/active/south-africa/programm/programm-10.webp',
+            photo: '/images/trips/active/south-africa/programm/southafrice-programm-10.webp',
         },
         {
             title: 'Водопад Виктория',
@@ -134,7 +134,7 @@ const tripDetailsSouthAfrica: TripDetailsType = {
                 'Прогулка к водопаду со стороны Замбии (отель рядом с нацпарком).',
                 'Во второй половине дня — круиз по реке Замбези на закате.',
             ],
-            photo: '/images/trips/active/south-africa/programm/programm-11.webp',
+            photo: '/images/trips/active/south-africa/programm/southafrice-programm-11.webp',
         },
         {
             title: 'Парк Чобе, Ботсвана',
@@ -143,14 +143,14 @@ const tripDetailsSouthAfrica: TripDetailsType = {
                 'Сафари в национальном парке Чобе (слоны, хищники, антилопы; бегемоты и крокодилы в реке).',
                 'Наблюдение за животными на суше и по реке, обед, возвращение в отель.',
             ],
-            photo: '/images/trips/active/south-africa/programm/programm-12.webp',
+            photo: '/images/trips/active/south-africa/programm/southafrice-programm-12.webp',
         },
         {
             title: 'Перелёт в Йоханнесбург',
             activities: [
                 'Завершение путешествия: переезд в аэропорт и вылет в Йоханнесбург.',
             ],
-            photo: '/images/trips/active/south-africa/programm/programm-13.webp',
+            photo: '/images/trips/active/south-africa/programm/southafrice-programm-13.webp',
         },
         {
             title: 'Международный перелёт домой',
@@ -158,7 +158,7 @@ const tripDetailsSouthAfrica: TripDetailsType = {
                 'Пересадка в Йоханнесбурге и международный перелёт домой.',
                 'Прибытие в Россию.',
             ],
-            photo: '/images/trips/active/south-africa/programm/programm-14.webp',
+            photo: '/images/trips/active/south-africa/programm/southafrice-programm-14.webp',
         },
     ],
     faq: [

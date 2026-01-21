@@ -75,3 +75,10 @@
         width: 100%;
     }
 }
+
+/* Скрываем нижнее меню, когда открыт оверлей */
+body:has(.overlay) .layout__nav,
+body:has(.programOverlay) .layout__nav,
+body:has(.caseOverlay) .layout__nav {
+    display: none;
+}
